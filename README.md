@@ -52,7 +52,7 @@ SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 커스텀 이벤
 3. 파라미터값
     * 지원 타입 : String(최대 100자), Number
 
-`<javascript>`
+`<Javascript>`
 
 ```javascript
 // 이벤트 및 파라미터 기록. 파라미터 형식: JSON 타입 { name : value, ... }
@@ -65,7 +65,7 @@ SphereAnalytics.logEvent("purchase_clicked", null);
 
 ## 사용자 속성 사용하기
 
-> 사용자 속성을 사용할 경우 수집된 이벤트들을 세분화하여 더욱 자세한 분석 정보를 얻을 수 있으며 수집된 정보들은 암호화되어 서버로 전송됩니다. 사용자 속성들은 한번 설정되면 이후 재설정 또는 초기화될 때까지 설정된 값으로 유지됩니다.
+> 사용자 속성을 사용할 경우 수집된 이벤트들을 세분화하여 더욱 자세한 분석 정보를 얻을 수 있으며 개인 정보들은 암호화되어 서버에 저장됩니다. 사용자 속성들은 한번 설정되면 이후 재설정 또는 초기화될 때까지 설정된 값으로 유지됩니다.
 
 사용자 속성 연동 시 고려해야 할 사항은 다음과 같으며 가능한 해당되는 모든 시점에 사용자 속성들을 설정해야 정확한 분석이 가능합니다.
 
@@ -78,13 +78,19 @@ SphereAnalytics.logEvent("purchase_clicked", null);
 해당 정보는 유저를 구분하기 위한 용도로만 사용되므로 사용자를 구분하는 어떠한 식별 아이디도 사용 가능합니다.  
 사용자 아이디는 최대 256자까지 설정가능하고 `null`로 설정 시 사용자 아이디 정보는 초기화되고 로그아웃 상태로 설정됩니다.  
 
-`<javascript>`
+`<Javascript>`
 
 ```javascript
-// 사용자 아이디 설정 - 로그인: ON 상태
-SphereAnalytics.setUserId("[USER ID]");
-// 사용자 아이디 초기화 - 로그아웃: OFF 상태
-SphereAnalytics.setUserId(null);
+if (isLogIn) { // 로그인: ON 상태
+
+    // 사용자 아이디 설정 - 로그인: ON 상태
+    SphereAnalytics.setUserId("[USER ID]");
+
+} else { // 로그아웃: OFF 상태
+
+    // 사용자 아이디 초기화 - 로그아웃: OFF 상태
+    SphereAnalytics.setUserId(null);
+}
 ```
 
 ### 사용자 정보 설정
@@ -93,20 +99,37 @@ SphereAnalytics.setUserId(null);
 설정된 사용자 정보들은 문자형의 경우 `null`로 설정 시 초기화되며 출생년도의 경우 0으로 설정 시 초기화됩니다.  
 Sphere Analytics를 통해 메세지(준비중) 기능을 사용하기 위해서는 전화번호 또는 이메일 정보를 필수로 설정해야 합니다.
 
-`<javascript>`
+`<Javascript>`
 
 ```javascript
-// 등급 설정
-SphereAnalytics.setGrade("vip");
-// 성별 설정
-SphereAnalytics.setGender("m"); // 남성일 경우: "m"
-SphereAnalytics.setGender("f"); // 여성일 경우: "f"
-// 출생년도 설정
-SphereAnalytics.setBirthYear(1995); // 출생년도
-// 전화번호 설정
-SphereAnalytics.setPhoneNumber("821011112222");
-// 이메일 설정
-SphereAnalytics.setEmail("xxxx@xxxx.com");
+if (isLogIn) { // 로그인: ON 상태
+
+    // 등급 설정
+    SphereAnalytics.setGrade("vip");
+    // 성별 설정
+    SphereAnalytics.setGender("m"); // 남성일 경우: "m"
+//                SphereAnalytics.setGender("f"); // 여성일 경우: "f"
+    // 출생년도 설정
+    SphereAnalytics.setBirthYear(1995); // 출생년도
+    // 이메일 설정
+    SphereAnalytics.setEmail("xxxx@xxxx.com");
+    // 전화번호 설정
+    SphereAnalytics.setPhoneNumber("821011112222");
+
+} else { // 로그아웃: OFF 상태
+
+    // 등급 초기화
+    SphereAnalytics.setGrade(null);
+    // 성별 초기화
+    SphereAnalytics.setGender(null);
+    // 출생년도 초기화
+    SphereAnalytics.setBirthYear(0);
+    // 이메일 초기화
+    SphereAnalytics.setEmail(null);
+    // 전화번호 초기화
+    SphereAnalytics.setPhoneNumber(null);
+
+}
 ```
 
 ### 사용자 포인트 설정
@@ -115,13 +138,21 @@ SphereAnalytics.setEmail("xxxx@xxxx.com");
 설정된 사용자 포인트 정보들은 `resetPoints` 함수 호출 시 일괄적으로 초기화 됩니다.  
 설정 가능한 포인트의 종류는 다음과 같으며 가능한 모든 포인트 정보를 설정해야 더욱 자세한 사용자 분석이 가능합니다.
 
-`<javascript>`
+`<Javascript>`
 
 ```javascript
-// 사용자 포인트 설정
-SphereAnalytics.setRemainingPoint(1000); // 현재 보유 포인트
-SphereAnalytics.setTotalEarnedPoint(5000); // 총 적립 포인트
-SphereAnalytics.setTotalUsedPoint(4000); // 총 사용 포인트
+if (isLogIn) { // 로그인: ON 상태
+
+    // 사용자 포인트 설정
+    SphereAnalytics.setRemainingPoint(1000); // 현재 보유 포인트
+    SphereAnalytics.setTotalEarnedPoint(5000); // 총 적립 포인트
+    SphereAnalytics.setTotalUsedPoint(4000); // 총 사용 포인트
+
+} else { // 로그아웃: OFF 상태
+
+    // 사용자 포인트 초기화(현재 보유 포인트, 총 적립 포인트, 총 사용 포인트)
+    SphereAnalytics.resetPoints();
+}
 ```
 
 ### 커스텀 사용자 속성 설정
@@ -140,7 +171,7 @@ SphereAnalytics.setTotalUsedPoint(4000); // 총 사용 포인트
     * 최대 100자
     * 지원 타입 : String
 
-`<javascript>`
+`<Javascript>`
 
 ```javascript
 // 커스텀 사용자 속성 설정
