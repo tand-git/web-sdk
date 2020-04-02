@@ -311,8 +311,8 @@ var SphereAnalytics = {
         return (typeof value === "number");
     },
 
-    _consoleLog:function(error) {
-        console.log(error);
+    _consoleLog:function(message) {
+//        console.log(message);
     }
 
 };
