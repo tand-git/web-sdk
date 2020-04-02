@@ -97,7 +97,7 @@ if (isLogIn) { // 로그인: ON 상태
 
 추가적인 사용자 정보(등급, 성별, 출생년도, 전화번호, 이메일)를 설정합니다.  
 설정된 사용자 정보들은 문자형의 경우 `null`로 설정 시 초기화되며 출생년도의 경우 0으로 설정 시 초기화됩니다.  
-Sphere Analytics를 통해 메세지(준비중) 기능을 사용하기 위해서는 전화번호 또는 이메일 정보를 필수로 설정해야 합니다.
+Sphere Analytics를 통해 사용자에게 SMS, 카카오톡 알림, 이메일 메시지(2020년 하반기 오픈예정) 보내는 기능을 이용하기 위해서는 전화번호 또는 이메일 정보를 필수로 설정해야 합니다.
 
 `<Javascript>`
 
@@ -108,7 +108,7 @@ if (isLogIn) { // 로그인: ON 상태
     SphereAnalytics.setGrade("vip");
     // 성별 설정
     SphereAnalytics.setGender("m"); // 남성일 경우: "m"
-//                SphereAnalytics.setGender("f"); // 여성일 경우: "f"
+//    SphereAnalytics.setGender("f"); // 여성일 경우: "f"
     // 출생년도 설정
     SphereAnalytics.setBirthYear(1995); // 출생년도
     // 이메일 설정
