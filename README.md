@@ -4,7 +4,8 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 
 * [웹 SDK 설치](#웹-SDK-설치)
 * [기본 연동](#기본-연동)
-  * [자바스크립트 API](#자바스크립트-API)
+  * [네이티브 SDK 연동](#네이티브-SDK-연동)
+  * [웹 SDK API](#웹-SDK-API)
 * [커스텀 이벤트 사용하기](#커스텀-이벤트-사용하기)
 * [사용자 속성 사용하기](#사용자-속성-사용하기)
   * [사용자 아이디 설정](#사용자-아이디-설정)
@@ -41,7 +42,7 @@ SphereAnalytics.init({
 * 웹 용으로 사용될 때는 웹 SDK에 설정한 `token` 값을 사용해서, 웹 사용 이력이 집계됩니다.
 * 웹 뷰용으로 사용될 때는 네이티브 SDK를 통해 처리되며, 네이티트 SDK에 설정된 앱 키를 사용해서 앱 사용 이력으로 집계됩니다.
 
-### 네이티브 SDK 연동 가이드
+### 네이티브 SDK 연동
 > 네이티브 SDK 설치는 **기본 연동**과 **웹뷰 설정**이 필수로 완료되어야 합니다.
 
 * [Android SDK 연동가이드](https://github.com/tand-git/android-sdk) : [기본 연동](https://github.com/tand-git/android-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/android-sdk#웹뷰-설정)
