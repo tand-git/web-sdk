@@ -1,7 +1,8 @@
 # Sphere SDK - Web
 
-Sphere Analytics SDK 연동 시 웹뷰용 자바스크립트 API를 사용하기 위한 가이드입니다.
+Sphere Analytics 웹 SDK 연동 가이드입니다.
 
+* [웹 SDK 설치](#웹-SDK-설치)
 * [기본 연동](#기본-연동)
   * [자바스크립트 API](#자바스크립트-API)
 * [커스텀 이벤트 사용하기](#커스텀-이벤트-사용하기)
@@ -10,19 +11,48 @@ Sphere Analytics SDK 연동 시 웹뷰용 자바스크립트 API를 사용하기
   * [사용자 정보 설정](#사용자-정보-설정)
   * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
 
+## 웹 SDK 설치
+
+> `sphere.min.js` 를 다운로드 한 후, 서비스 웹 루트에 복사한 후, 이 새로운 url을 `_sphereJsUrl` 변수에 설정하세요.  
+> [SphereAnalytics 홈페이지](https://analytics.tand.kr)에서 생성한 웹 키를 `SphereAnalytics.init()` 메소드 통해 설정하세요.  
+> 웹 페이지의 `<head>`에 다음 스크립트를 삽입해 주세요.
+```html
+<script type="application/javascript">
+var _sphereJsUrl = "https://user-domain.com/sphere.min.js"; // Please change to the sdk download url on your site.
+!function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","enableLog"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+SphereAnalytics.init({
+    token: "[Web Key]",
+    test: true, // Communicate with the test server.
+    enableLog: true, // Log output for testing
+});
+</script>
+```
+> 상용 서비스에 반영할 때에는 초기화 설정을 아래와 같이 변경해 주세요. (상용 서비스 연동, 오류를 제외한 로그 출력 방지)
+```js
+SphereAnalytics.init({
+    token: "[Web Key]",
+});
+```
+
 ## 기본 연동
 
-> 웹뷰용 자바스크립트 API를 사용하기 위해서는 Android 및 iOS SDK 연동가이드의 기본 연동 및 웹뷰 설정이 필수적으로 완료되어야 네이티브 Sphere SDK를 통해 이벤트 수집이 가능합니다.
+> 웹 뷰 환경에서는 네이티브 SDK를 통해 이벤트를 수집하고, 일반 브라우저 환경에서는 웹 SDK 단독으로 이벤트를 수집합니다.
+
+* 웹 용으로 사용될 때는 웹 SDK에 설정한 `token` 값을 사용해서, 웹 사용 이력이 집계됩니다.
+* 웹 뷰용으로 사용될 때는 네이티브 SDK를 통해 처리되며, 네이티트 SDK에 설정된 앱 키를 사용해서 앱 사용 이력으로 집계됩니다.
+
+### 네이티브 SDK 연동 가이드
+> 네이티브 SDK 설치는 **기본 연동**과 **웹뷰 설정**이 필수로 완료되어야 합니다.
 
 * [Android SDK 연동가이드](https://github.com/tand-git/android-sdk) : [기본 연동](https://github.com/tand-git/android-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/android-sdk#웹뷰-설정)
 * [iOS SDK 연동가이드](https://github.com/tand-git/ios-sdk) : [기본 연동](https://github.com/tand-git/ios-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/ios-sdk#웹뷰-설정)
 * [SDK 연동 검증 가이드](https://github.com/tand-git/sphere-sdk/blob/master/guide/SDK_Inspection.md) : 기본 연동이 완료되었다면 SDK 연동 검증 가이드에 따라 SDK 동작 상태를 확인할 수 있습니다.
 
-### 자바스크립트 API
+### 웹 SDK API
 
-웹페이지의 `<head>` 또는 `<body>`에 Sphere 자바스크립트 API 파일([sphereAnalytics.js](web/sphereAnalytics.js))을 추가하고 해당 화면 또는 이벤트 발생 시점에 자바스크립트 API 함수를 호출합니다.
+[웹 SDK를 설치](#웹-SDK-설치)한 후, 페이지 로딩 또는 이벤트 발생 시점에 자바스크립트 API 함수를 호출합니다.
 
-`<sphereAnalytics.js>` Sphere 자바스크립트 API
+`<sphereAnalytics.js>` Sphere 웹 SDK API
 > [web/sphereAnalytics.js](web/sphereAnalytics.js) 파일 참조
 
 `<index.html>` 웹페이지 사용 예제
@@ -50,9 +80,7 @@ SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 커스텀 이벤
 3. 파라미터값
     * 지원 타입 : String(최대 100자), Number
 
-`<Javascript>`
-
-```javascript
+```js
 // 이벤트 및 파라미터 기록. 파라미터 형식: JSON 타입 { name : value, ... }
 var params = { item: "notebook", price: 9.9, quantity: 1 };
 SphereAnalytics.logEvent("purchase", params);
@@ -76,16 +104,11 @@ SphereAnalytics.logEvent("purchase_clicked", null);
 해당 정보는 유저를 구분하기 위한 용도로만 사용되므로 사용자를 구분하는 어떠한 식별 아이디도 사용 가능합니다.  
 사용자 아이디는 최대 256자까지 설정가능하고 `null`로 설정 시 사용자 아이디 정보는 초기화되고 로그아웃 상태로 설정됩니다.  
 
-`<Javascript>`
-
-```javascript
+```js
 if (isLogIn) { // 로그인: ON 상태
-
     // 사용자 아이디 설정 - 로그인: ON 상태
     SphereAnalytics.setUserId("[USER ID]");
-
 } else { // 로그아웃: OFF 상태
-
     // 사용자 아이디 초기화 - 로그아웃: OFF 상태
     SphereAnalytics.setUserId(null);
 }
@@ -100,46 +123,25 @@ if (isLogIn) { // 로그인: ON 상태
 2. 숫자형(보유 포인트) 초기화 : `resetPoints` 함수 호출
 3. 숫자형(출생년도) 초기화 : `0`으로 설정
 
-`<Javascript>`
-
-```javascript
+```js
 if (isLogIn) { // 로그인: ON 상태
-
     // 사용자 아이디 설정
     SphereAnalytics.setUserId("[USER ID]");
-
     // 보유 포인트 설정
     SphereAnalytics.setRemainingPoint(1000);
     // 등급 설정
     SphereAnalytics.setGrade("vip");
     // 성별 설정
-    SphereAnalytics.setGender("m"); // 남성일 경우: "m"
-//    SphereAnalytics.setGender("f"); // 여성일 경우: "f"
+    SphereAnalytics.setGender("m"); // 남성일 경우: "m", 여성일 경우: "f"
     // 출생년도 설정
     SphereAnalytics.setBirthYear(1995); // 출생년도
     // 이메일 설정
     SphereAnalytics.setEmail("xxxx@xxxx.com");
     // 전화번호 설정
-    SphereAnalytics.setPhoneNumber("821011112222");
-
+    SphereAnalytics.setPhone("821011112222");
 } else { // 로그아웃: OFF 상태
-
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
-
-    // 보유 포인트 초기화
-    SphereAnalytics.resetPoints();
-    // 등급 초기화
-    SphereAnalytics.setGrade(null);
-    // 성별 초기화
-    SphereAnalytics.setGender(null);
-    // 출생년도 초기화
-    SphereAnalytics.setBirthYear(0);
-    // 이메일 초기화
-    SphereAnalytics.setEmail(null);
-    // 전화번호 초기화
-    SphereAnalytics.setPhoneNumber(null);
-
 }
 ```
 
@@ -160,9 +162,7 @@ if (isLogIn) { // 로그인: ON 상태
     * 최대 100자
     * 지원 타입 : String
 
-`<Javascript>`
-
-```javascript
+```js
 // 커스텀 사용자 속성 설정
 SphereAnalytics.setUserProperty("user_property_name", "user_property_value");
 // 커스텀 사용자 속성 초기화
