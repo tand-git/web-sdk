@@ -6,49 +6,49 @@
 <meta name="viewport" content="initial-scale=1.0">
 <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 <style type="text/css">
-	.outset { border-style: outset; }
+  .outset { border-style: outset; }
 </style>
 <script> // 설치 script
-	// [Caution] The URL below is very slow and may break someday. Please do not use this URL directly in the service.
-	// [주의] 아래 URL은 매우 느리고 언젠가 깨질 수 있습니다. 서비스에 이 URL을 직접 이용하지 마십시오.
-	var _sphereJsUrl = "https://cdn-test.tand.kr/sdk/sphere.min.js";
-	!function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","enableLog"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
-	// 연동 테스트 설정
-	SphereAnalytics.init({
-		token: "~TestTestTestUS4p2gnbM",
-		test: true, // default: false, if true: https://trk.tand.kr:8883, if false: https://trk-test.tand.kr:8883
-		enableLog: true, // default: false
-	});
+  // [Caution] The URL below is very slow and may break someday. Please do not use this URL directly in the service.
+  // [주의] 아래 URL은 매우 느리고 언젠가 깨질 수 있습니다. 서비스에 이 URL을 직접 이용하지 마십시오.
+  var _sphereJsUrl = "https://cdn-test.tand.kr/sdk/sphere.min.js";
+  !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","enableLog"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+  // 연동 테스트 설정
+  SphereAnalytics.init({
+    token: "~TestTestTestUS4p2gnbM",
+    test: true, // default: false, if true: https://trk.tand.kr:8883, if false: https://trk-test.tand.kr:8883
+    enableLog: true, // default: false
+  });
 </script>
 <script> // 테스트 function
-	function login(userId, gender, birthYear) {
-		SphereAnalytics
-			.setUserId(userId)
+  function login(userId, gender, birthYear) {
+    SphereAnalytics
+      .setUserId(userId)
       .setGender(gender)
-			.setBirthYear(birthYear)
-			;
+      .setBirthYear(birthYear)
+      ;
   }
   function logout() {
-		SphereAnalytics
-			.setUserId(null)
-			;
+    SphereAnalytics
+      .setUserId(null)
+      ;
   }
   function setGrade(grade) {
-		SphereAnalytics
-			.setGrade(grade)
-			;
-	}
+    SphereAnalytics
+      .setGrade(grade)
+      ;
+  }
   function setUserProperty(name, value) {
-		SphereAnalytics
-			.setUserProperty(name, value)
-			;
-	}
-	function setPoint(earned, remaining, used) {
-		SphereAnalytics
-			.setTotalEarnedPoint(earned)
-			.setRemainingPoint(remaining)
-			.setTotalUsedPoint(used)
-			;
+    SphereAnalytics
+      .setUserProperty(name, value)
+      ;
+  }
+  function setPoint(earned, remaining, used) {
+    SphereAnalytics
+      .setTotalEarnedPoint(earned)
+      .setRemainingPoint(remaining)
+      .setTotalUsedPoint(used)
+      ;
   }
   function logEvent(name, param) {
     SphereAnalytics.logEvent(name, param);
@@ -59,19 +59,19 @@
   <h3>SphereAnalytics Web SDK Test Page</h3>
   <botton class="outset" onclick="login('userA','m',1985)">UserA 로그인</botton><br /><br />
   <botton class="outset" onclick="logout()">로그아웃</botton><br /><br />
-	<h4>User Property 테스트</h4>
+  <h4>User Property 테스트</h4>
   <botton class="outset" onclick="setPoint(1000,800,200)">포인트 정보 전송</botton><br /><br />
   <botton class="outset" onclick="setGrade('gold')">사용자 등급 Gold 설정</botton><br /><br />
   <botton class="outset" onclick="setGrade('silver')">사용자 등급 Silver 설정</botton>
   <h4>이벤트 전송 테스트</h4>
   <botton class="outset" onclick="logEvent('test')">테스트 이벤트(파라미터 없음)</botton><br /><br />
   <botton class="outset" onclick="logEvent('test',{pname:1})">테스트 이벤트(파라미터 있음)</botton>
-	<h4>예외 테스트</h4>
+  <h4>예외 테스트</h4>
   <botton class="outset" onclick="setUserProperty('_abc', 'hahaha')">잘못된 사용자 속성 명 설정</botton><br /><br />
   <botton class="outset" onclick="logEvent('#abc', {'pname':1})">잘못된 이벤트 명 설정</botton><br /><br />
-	<botton class="outset" onclick="logEvent('teat', {'_pname':1})">잘못된 이벤트 파라미터 명 설정</botton>
+  <botton class="outset" onclick="logEvent('teat', {'_pname':1})">잘못된 이벤트 파라미터 명 설정</botton>
   <script>
-		SphereAnalytics.logEvent("page", {url: document.location.href});
+    SphereAnalytics.logEvent("page", {url: document.location.href});
   </script>
 </body>
 </html>
