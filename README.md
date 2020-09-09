@@ -20,15 +20,15 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 ```html
 <script type="application/javascript">
 var _sphereJsUrl = "https://user-domain.com/sphere.min.js"; // Please change to the sdk download url on your site.
-!function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","enableLog"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+!function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
 SphereAnalytics.init({
     token: "[Web Key]",
     test: true, // Communicate with the test server.
-    enableLog: true, // Log output for testing
+    logLevel: 'verbose', // default: "error" ["none", "error", "info", "verbose"]
 });
 </script>
 ```
-> 상용 서비스에 반영할 때에는 초기화 설정을 아래와 같이 변경해 주세요. (상용 서비스 연동, 오류를 제외한 로그 출력 방지)
+> 상용 서비스에 반영할 때에는 초기화 설정을 아래와 같이 변경해 주세요. (상용 서버 연동, logLevel = 'error')
 ```js
 SphereAnalytics.init({
     token: "[Web Key]",
