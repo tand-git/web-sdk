@@ -12,12 +12,12 @@
   // [Caution] The URL below is very slow and may break someday. Please do not use this URL directly in the service.
   // [주의] 아래 URL은 매우 느리고 언젠가 깨질 수 있습니다. 서비스에 이 URL을 직접 이용하지 마십시오.
   var _sphereJsUrl = "https://cdn-test.tand.kr/sdk/sphere.min.js";
-  !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","enableLog"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+  !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
   // 연동 테스트 설정
   SphereAnalytics.init({
-    token: "~TestTestTestUS4p2gnbM",
+    token: '~TestTestTestUS4p2gnbM',
     test: true, // default: false, if true: https://trk.tand.kr:8883, if false: https://trk-test.tand.kr:8883
-    enableLog: true, // default: false
+    logLevel: 'verbose', // default: "error" ["none", "error", "info", "verbose"]
   });
 </script>
 <script> // 테스트 function
