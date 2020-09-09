@@ -1,14 +1,14 @@
 // @flow
 /**
- * SphereAnalytics API
+ * SphereAnalytics API 명세서
  */
 export interface SphereAnalytics
 {
   /** 초기화
    * 설정 가능한 속성
-   * - token: {string} '{webTokenValue}'
+   * - token: {string} 웹 Key
    * - test: {boolean} 테스트 연동 (default: false)
-   * - enableLog: {boolean} 로그 출력 여부 (default: false)
+   * - logLevel: {'none'|'error'|'info'|'verbose'} 로그 레벨 설정 (default: 'error')
    * @param {Object} settings 
    * @returns {SphereAnalytics}
    */
@@ -87,9 +87,9 @@ export interface SphereAnalytics
    */
   requestUpload(): SphereAnalytics;
 
-  /** 로그 출력 설정
-   * @param {boolean} enable 
+  /** 로그 레벨 설정
+   * @param {'none'|'error'|'info'|'verbose'} enable 
    * @returns {SphereAnalytics}
    */
-  enableLog(enable: boolean): SphereAnalytics;
+  setLogLevel(level: 'none'|'error'|'info'|'verbose'): SphereAnalytics;
 }
