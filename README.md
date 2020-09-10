@@ -14,26 +14,63 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 
 ## 웹 SDK 설치
 
-> `sphere.min.js` 를 다운로드 한 후, 서비스 웹 루트에 복사한 후, 이 새로운 url을 `_sphereJsUrl` 변수에 설정하세요.  
-> [SphereAnalytics 홈페이지](https://analytics.tand.kr)에서 생성한 웹 키를 `SphereAnalytics.init()` 메소드 통해 설정하세요.  
-> 웹 페이지의 `<head>`에 다음 스크립트를 삽입해 주세요.
-```html
-<script type="application/javascript">
-var _sphereJsUrl = "https://user-domain.com/sphere.min.js"; // Please change to the sdk download url on your site.
-!function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
-SphereAnalytics.init({
-    token: "[Web Key]",
-    test: true, // Communicate with the test server.
-    logLevel: 'verbose', // default: "error" ["none", "error", "info", "verbose"]
-});
-</script>
-```
-> 상용 서비스에 반영할 때에는 초기화 설정을 아래와 같이 변경해 주세요. (상용 서버 연동, logLevel = 'error')
-```js
-SphereAnalytics.init({
-    token: "[Web Key]",
-});
-```
+* **1 단계**: 전달한 웹 SDK 파일(sphere.min.js)을 서비스 도메인에서 다운로드 가능하도록 웹 서버에 복사해 주세요.  
+   **(확인)** '*https://[서비스-도메인]/sphere.min.js*' 형식의 HTTPS URL로 웹 SDK 파일 다운로드가 가능한지 확인해 주세요.
+
+* **2 단계**: 아래 `<script>` 태그를 `<head>`에 추가해 주세요. 아래 2가지 중 원하시는 형태를 사용하시면 됩니다.
+    ```html
+    <script>
+        var _sphereJsUrl = "https://[서비스-도메인]/sphere.min.js";    
+        !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+    </script>
+    ```
+    또는
+    ```html
+    <script src="https://[서비스-도메인]/sphere.min.js" async></script>
+    <script>
+        !function(e,t,n,s){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var r=0;r<n.length;r++)s(e.SphereAnalytics,n[r])}(window,document,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+    </script>
+    ```
+* **3 단계**: **1 단계**에서 생성한 다운로드 URL을 위 **2 단계**의 `_sphereUrl` 변수 또는 `<script src>`속성값으로 할당해 주십시오.
+  - 웹 SDK는 비동기(async) 방식으로 다운로드되며, 다운로드가 지연되더라도 서비스 페이지 로딩에 지연을 발생시키지는 않습니다.
+  - 웹 SDK 다운로드 완료전에도 웹 SDK API 호출이 가능하며, 다운로드 완료된 시점에 호출했던 API들이 일괄 지연 처리됩니다.
+
+* **4 단계(선택사항)**:  
+  - **(웹 용으로 사용한다면)** 전달받은 `[Web Key]`를 초기화 때, 반드시 웹 SDK에 설정해 주세요.  
+  - **(웹 뷰 전용으로 사용한다면)** 생략 가능합니다.
+    ```html
+    <script>
+        SphereAnalytics.init({
+            token: '[Web Key]'
+        });
+    </script>
+    ```
+
+### 웹 SDK 연동 테스트 설정
+> 웹 SDK를 웹 용으로 사용한다면, 아래 테스트 설정을 통해 다양한 테스트용 이벤트를 발송할 수 있습니다.  
+
+* **(웹 용으로 사용한다면)** 연동 테스트를 위해서, 위 **4 단계** 코드를 아래로 교체한 후 진행해 주세요.
+    ```js
+    SphereAnalytics.init({
+        token: "[Web Key]",
+        test: true, // Communicate with the test server.
+        logLevel: 'verbose', // default: "error" ["none", "error", "info", "verbose"]
+        trackAnonymous: false,
+    });
+    ```
+    - `SphereAnalytics.init()` 메소드를 통해 설정 가능한 옵션은 아래와 같습니다.
+        + **token** : (웹 용으로 사용할 때 필수) 웹 용으로 데이타 집계하기 위한 키 값입니다.
+            + 자료형: `string`
+        - **test** : 테스트 서버 연동 (기본값: false)
+            + 자료형: `boolean`
+            + 기본값: `false`
+            + 테스트 서버에 전송한 데이타는 상용 서비스에 영향을 끼치지 않습니다.
+        - **logLvel** : (웹 용으로 사용할 때) 설정한 로그 레벨에 따라, 브라우저의 개발자 console에 디버깅 로그를 출력합니다.
+            + 자료형: `string` - 다음 값 중 하나가 와야 합니다. [`'none'`,`'error'`,`'info'`,`'verbose'`]
+            + 기본값: `'error'`
+        - **trackAnonymous** : 기본적으로 로그인 사용자의 이벤트만 수집합니다. 이 값을 true로 설정하면, 익명 사용자의 이벤트도 함께 수집할 수 있습니다.
+            + 자료형: `boolean`
+            + 기본값: `false`
 
 ## 기본 연동
 
