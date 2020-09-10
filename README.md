@@ -17,7 +17,7 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 * **1 단계**: 전달한 웹 SDK 파일(sphere.min.js)을 서비스 도메인에서 다운로드 가능하도록 웹 서버에 복사해 주세요.  
    **(확인)** '*https://[서비스-도메인]/sphere.min.js*' 형식의 HTTPS URL로 웹 SDK 파일 다운로드가 가능한지 확인해 주세요.
 
-* **2 단계**: 아래 `<script>` 태그를 `<head>`에 추가해 주세요. 아래 2가지 중 원하시는 형태를 사용하시면 됩니다.
+* **2 단계**: 아래 `<script>` 태그를 `<head>`에 추가해 주세요.
     ```html
     <script>
         var _sphereJsUrl = "https://[서비스-도메인]/sphere.min.js";    
