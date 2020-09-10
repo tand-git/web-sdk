@@ -3,6 +3,7 @@
 Sphere Analytics 웹 SDK 연동 가이드입니다.
 
 * [웹 SDK 설치](#웹-SDK-설치)
+  * [웹 SDK 테스트 설정](#웹-SDK-테스트-설정)
 * [기본 연동](#기본-연동)
   * [네이티브 SDK 연동](#네이티브-SDK-연동)
   * [웹 SDK API](#웹-SDK-API)
@@ -17,18 +18,18 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 * **1 단계**: 전달한 웹 SDK 파일(sphere.min.js)을 서비스 도메인에서 다운로드 가능하도록 웹 서버에 복사해 주세요.  
    **(확인)** '*https://[서비스-도메인]/sphere.min.js*' 형식의 HTTPS URL로 웹 SDK 파일 다운로드가 가능한지 확인해 주세요.
 
-* **2 단계**: 아래 `<script>` 태그를 `<head>`에 추가해 주세요. 아래 2가지 중 원하시는 형식을 사용하시면 됩니다.
+* **2 단계**: 아래 `<script>` 태그를 `<head>`에 추가해 주세요. 아래 2가지 중 원하시는 형태를 사용하시면 됩니다.
     ```html
     <script>
         var _sphereJsUrl = "https://[서비스-도메인]/sphere.min.js";    
-        !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+        !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhoneNumber","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","resetPoints","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
     </script>
     ```
     또는
     ```html
     <script src="https://[서비스-도메인]/sphere.min.js" async></script>
     <script>
-        !function(e,t,n,s){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var r=0;r<n.length;r++)s(e.SphereAnalytics,n[r])}(window,document,["init","setUserId","setGrade","setGender","setBirthYear","setPhone","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
+        !function(e,t,n,s){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var r=0;r<n.length;r++)s(e.SphereAnalytics,n[r])}(window,document,["init","setUserId","setGrade","setGender","setBirthYear","setPhoneNumber","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","resetPoints","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
     </script>
     ```
 * **3 단계**: **1 단계**에서 생성한 다운로드 URL을 위 **2 단계**의 `_sphereUrl` 변수 또는 `<script src>`속성값으로 할당해 주십시오.
@@ -46,17 +47,19 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
     </script>
     ```
 
-### 웹 SDK 연동 테스트 설정
+### 웹 SDK 테스트 설정
 > 웹 SDK를 웹 용으로 사용한다면, 아래 테스트 설정을 통해 다양한 테스트용 이벤트를 발송할 수 있습니다.  
 
 * **(웹 용으로 사용한다면)** 연동 테스트를 위해서, 위 **4 단계** 코드를 아래로 교체한 후 진행해 주세요.
-    ```js
-    SphereAnalytics.init({
-        token: "[Web Key]",
-        test: true, // Communicate with the test server.
-        logLevel: 'verbose', // default: "error" ["none", "error", "info", "verbose"]
-        trackAnonymous: false,
-    });
+    ```html
+    <script>
+        SphereAnalytics.init({
+            token: "[Web Key]",
+            test: true, // Communicate with the test server.
+            logLevel: 'verbose', // default: "error" ["none", "error", "info", "verbose"]
+            trackAnonymous: false,
+        });
+    </script>
     ```
     - `SphereAnalytics.init()` 메소드를 통해 설정 가능한 옵션은 아래와 같습니다.
         + **token** : (웹 용으로 사용할 때 필수) 웹 용으로 데이타 집계하기 위한 키 값입니다.
@@ -66,7 +69,7 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
             + 기본값: `false`
             + 테스트 서버에 전송한 데이타는 상용 서비스에 영향을 끼치지 않습니다.
         - **logLvel** : (웹 용으로 사용할 때) 설정한 로그 레벨에 따라, 브라우저의 개발자 console에 디버깅 로그를 출력합니다.
-            + 자료형: `string` - 다음 값 중 하나가 와야 합니다. [`'none'`,`'error'`,`'info'`,`'verbose'`]
+            + 자료형: `string` - 다음 값 중 하나를 설정해야 합니다. [`'none'`,`'error'`,`'info'`,`'verbose'`]
             + 기본값: `'error'`
         - **trackAnonymous** : 기본적으로 로그인 사용자의 이벤트만 수집합니다. 이 값을 true로 설정하면, 익명 사용자의 이벤트도 함께 수집할 수 있습니다.
             + 자료형: `boolean`
@@ -124,6 +127,8 @@ var params = { item: "notebook", price: 9.9, quantity: 1 };
 SphereAnalytics.logEvent("purchase", params);
 
 // 파라미터가 없는 이벤트 기록
+SphereAnalytics.logEvent("purchase_clicked");
+ 또는
 SphereAnalytics.logEvent("purchase_clicked", null);
 ```
 
@@ -157,14 +162,16 @@ if (isLogIn) { // 로그인: ON 상태
 추가적인 사용자 정보(보유 포인트, 등급, 성별, 출생년도, 전화번호, 이메일)를 설정합니다.  
 로그아웃 상태 시 다음과 같이 설정된 사용자 정보들을 초기화해야 합니다.
 
-1. 문자형(등급, 성별, 출생년도, 전화번호, 이메일) 초기화 : `null`로 설정
+1. 문자형(등급, 성별, 전화번호, 이메일) 초기화 : `null`로 설정
 2. 숫자형(보유 포인트) 초기화 : `resetPoints` 함수 호출
 3. 숫자형(출생년도) 초기화 : `0`으로 설정
 
 ```js
 if (isLogIn) { // 로그인: ON 상태
+
     // 사용자 아이디 설정
     SphereAnalytics.setUserId("[USER ID]");
+
     // 보유 포인트 설정
     SphereAnalytics.setRemainingPoint(1000);
     // 등급 설정
@@ -176,10 +183,26 @@ if (isLogIn) { // 로그인: ON 상태
     // 이메일 설정
     SphereAnalytics.setEmail("xxxx@xxxx.com");
     // 전화번호 설정
-    SphereAnalytics.setPhone("821011112222");
+    SphereAnalytics.setPhoneNumber("821011112222");
+
 } else { // 로그아웃: OFF 상태
+
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
+
+    // 보유 포인트 초기화
+    SphereAnalytics.resetPoints();
+    // 등급 초기화
+    SphereAnalytics.setGrade(null);
+    // 성별 초기화
+    SphereAnalytics.setGender(null);
+    // 출생년도 초기화
+    SphereAnalytics.setBirthYear(0);
+    // 이메일 초기화
+    SphereAnalytics.setEmail(null);
+    // 전화번호 초기화
+    SphereAnalytics.setPhoneNumber(null);
+
 }
 ```
 
