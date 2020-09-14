@@ -49,9 +49,9 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 ```html
 <script>
  let sphereAs_options  = new Object();
-  //sphereAs_options.test = true;	   	        //default : false 테스트연동 여부 
-  //sphereAs_options.logLevel = 'verbose'	    //default : error 로그레벨 ['none' | 'error' | 'info' | 'verbose']
-  //sphereAs_options.trackAnonymous = false;	//default : false 비로그인 사용자 추척여부
+  //sphereAs_options.test = true;           //default : false 테스트연동 여부 
+  //sphereAs_options.logLevel = 'verbose';  //default : error 로그레벨 ['none' | 'error' | 'info' | 'verbose']
+  //sphereAs_options.trackAnonymous = false;//default : false 비로그인 사용자 추척여부
 
   // 연동 테스트 설정
   SphereAnalytics.init(
