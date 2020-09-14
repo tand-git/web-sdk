@@ -44,6 +44,24 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
     SphereAnalytics.init("[Your Sphere Web Key]");
 </script>
 ```
+1.옵션 설정
+> 아래의 옵션 중 필요한 옵션만 주석을 풀고 적용합니다.
+```html
+<script>
+ let sphereAs_options  = new Object();
+  //sphereAs_options.test = true;	   	        //default : false 테스트연동 여부 
+  //sphereAs_options.logLevel = 'verbose'	    //default : error 로그레벨 ['none' | 'error' | 'info' | 'verbose']
+  //sphereAs_options.trackAnonymous = false;	//default : false 비로그인 사용자 추척여부
+
+  // 연동 테스트 설정
+  SphereAnalytics.init(
+          '[Your Sphere Web Key]'
+          ,sphereAs_options
+  );
+</script>
+```
+
+
 
 ### 자바스크립트 SDK API
 

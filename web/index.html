@@ -7,14 +7,22 @@
 <style type="text/css">
   .outset { border-style: outset; }
 </style>
-<script> // 설치 script
-  var _sphereJsUrl = "https://[서비스-도메인]/sphere.min.js";
-  !function(e,t,r,s,n){e.SphereAnalytics=e.SphereAnalytics||{_q:[]};for(var i=0;i<s.length;i++)n(e.SphereAnalytics,s[i]);o=t.createElement("script");o.async=!0,o.src=r;a=t.getElementsByTagName("script")[0];a.parentNode.insertBefore(o,a)}(window,document,_sphereJsUrl,["init","setUserId","setGrade","setGender","setBirthYear","setPhoneNumber","setEmail","setRemainingPoint","setTotalEarnedPoint","setTotalUsedPoint","setUserProperty","logEvent","resetPoints","requestUpload","setLogLevel"],function(e,t){e[t]=function(){return e._q.push([t,arguments]),e}});
-  // 연동 테스트 설정
-  SphereAnalytics.init({
-    token: '[Web Key]'
-  });
+<!-- 설치 script -->
+<script src="sphereAnalytics.min.js"></script>
+<!-- 연동 테스트 설정   -->
+<script>
+  let sphereAs_options  = new Object();
+   //sphereAs_options.test = true;	   	        //default : false 테스트연동 여부 
+   //sphereAs_options.logLevel = 'verbose'	    //default : error 로그레벨 ['none' | 'error' | 'info' | 'verbose']
+   //sphereAs_options.trackAnonymous = false;	  //default : false 비로그인 사용자 추척여부
+ 
+   // 연동 테스트 설정
+   SphereAnalytics.init(
+           '[Your Sphere Web Key]'
+           ,sphereAs_options
+   );
 </script>
+
 <script> // 테스트 function
   function login(userId, gender, birthYear) {
     SphereAnalytics

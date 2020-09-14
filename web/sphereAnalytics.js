@@ -13,7 +13,7 @@ export interface SphereAnalytics
    * @param {Object} settings 
    * @returns {SphereAnalytics}
    */
-  init(settings: Object): SphereAnalytics;
+  init(token: string, settings: Object): SphereAnalytics;
 
   /** 로그인 설정 및 헤제
    * @param {string} userId 
