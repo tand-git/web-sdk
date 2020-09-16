@@ -1,27 +1,27 @@
-# Sphere SDK - Web
-
-Sphere Analytics 웹 SDK 연동 가이드입니다.
+# Sphere Web SDK
 
 * [기본 연동](#기본-연동)
   * [네이티브 SDK 연동](#네이티브-SDK-연동)
   * [자바스크립트 SDK 다운로드 및 설치](#자바스크립트-SDK-다운로드-및-설치)
   * [자바스크립트 SDK 초기화](#자바스크립트-SDK-초기화)
-  * [자바스크립트 SDK API](#자바스크립트-SDK-API)
+  * [샘플 소스](#샘플-소스)
 * [커스텀 이벤트 사용하기](#커스텀-이벤트-사용하기)
 * [사용자 속성 사용하기](#사용자-속성-사용하기)
   * [사용자 아이디 설정](#사용자-아이디-설정)
   * [사용자 정보 설정](#사용자-정보-설정)
   * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
+* [추가 설정](#추가-설정)
 
 ## 기본 연동
 
 > SDK 기본 연동은 이벤트 수집을 위한 필수 연동 사항이며 보다 정확한 이벤트 분석 및 트래킹을 위해서는 기본 연동에 포함된 가이드 중 해당되는 모든 항목들의 연동이 필요합니다.
 
-* 브라우저 기반의 웹페이지를 이용하는 사용자는 자바스크립트 SDK에서 설정한 웹키를 통해 이벤틀를 수집
-* 모바일(Android, iOS) 기반의 웹뷰를 이용하는 사용자는 네이티브 SDK에서 설정한 앱키를 통해 이벤트를 수집
+* 웹뷰 기반의 모바일 앱을 통한 사용자는 네이티브 SDK에서 설정한 앱키(App Key)를 통해 이벤트를 수집
+* 인터넷 웹브라우저를 통해 접속한 사용자는 자바스크립트 SDK에서 설정한 웹키(Web Key)를 통해 이벤트를 수집
 
 ### 네이티브 SDK 연동
-> 웹뷰용 자바스크립트 API를 사용하기 위해서는 Android 및 iOS SDK 연동가이드의 기본 연동 및 웹뷰 설정이 필수적으로 완료되어야 네이티브 SDK를 통해 이벤트 수집이 가능합니다.
+
+> 웹뷰 기반의 모바일 앱인 경우 필수 연동 사항이며 Android, iOS SDK 연동가이드의 기본 연동 및 웹뷰 설정이 완료되어야 네이티브 SDK를 통해 이벤트 수집이 가능합니다.
 
 * [Android SDK 연동가이드](https://github.com/tand-git/android-sdk) : [기본 연동](https://github.com/tand-git/android-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/android-sdk#웹뷰-설정)
 * [iOS SDK 연동가이드](https://github.com/tand-git/ios-sdk) : [기본 연동](https://github.com/tand-git/ios-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/ios-sdk#웹뷰-설정)
@@ -29,7 +29,7 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 
 ### 자바스크립트 SDK 다운로드 및 설치
 
-자바스크립트 API 파일([web/sphereAnalytics.min.js](web/sphereAnalytics.min.js))을 웹서버에 다운로드한 후 웹페이지의 `<head>`에 Sphere 자바스크립트 API 파일(sphereAnalytics.min.js)을 추가합니다.
+[SDK 다운로드 페이지](https://github.com/tand-git/web-sdk/releases)에서 최신 버전의 자바스크립트 SDK 파일(`sphereAnalytics.min.js`)을 웹서버에 다운로드한 후 웹페이지의 `<head>` 태그 내 또는 Sphere 자바스크립트 API 호출 이전 시점에 자바스크립트 SDK 파일(sphereAnalytics.min.js)을 추가합니다.
 
 ```html
 <script src="sphereAnalytics.min.js"></>
@@ -37,44 +37,29 @@ Sphere Analytics 웹 SDK 연동 가이드입니다.
 
 ### 자바스크립트 SDK 초기화
 
-전달받은 웹키를 사용하여 Sphere SDK를 초기화합니다. 초기화가 완료되지 않았거나 정상적인 웹키를 사용하지 않은 경우 데이터가 수집되지 않습니다.
+> 모바일 앱만 지원하는 경우에는 자바스크립트 SDK 초기화는 필요하지 않습니다.
+> 웹브라우저를 통해 접속한 사용자의 데이터를 수집하는 경우 자바스크립트 SDK 초기화가 필요합니다.
 
-```html
-<script>
-    SphereAnalytics.init("[Your Sphere Web Key]");
-</script>
-```
-1.옵션 설정
-> 아래의 옵션 중 필요한 옵션만 주석을 풀고 적용합니다.
-```html
-<script>
- let sphereAs_options  = new Object();
-  //sphereAs_options.test = true;           //default : false 테스트연동 여부 
-  //sphereAs_options.logLevel = 'verbose';  //default : error 로그레벨 ['none' | 'error' | 'info' | 'verbose']
-  //sphereAs_options.trackAnonymous = false;//default : false 비로그인 사용자 추척여부
+|구분|자바스크립트 SDK 초기화|네이티브 SDK 연동|
+|----|:---:|:---:|
+|모바일 앱에서만 수집|X|필수|
+|인터넷 웹브라우저에서만 수집|필수|X|
+|모바일 앱, 인터넷 웹브라우저 모두 수집|필수|필수|
 
-  // 연동 테스트 설정
-  SphereAnalytics.init(
-          '[Your Sphere Web Key]'
-          ,sphereAs_options
-  );
-</script>
+[Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 웹키와 함께 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
+초기화가 완료되지 않았거나 정상적인 웹키를 사용하지 않은 경우 웹브라우저 환경에서 데이터가 수집되지 않습니다.
+
+```js
+SphereAnalytics.init("Your Sphere Analytics Web Key");
 ```
 
+### 샘플 소스
 
+[SDK 샘플 소스](web)에서 최신 버전의 Sphere SDK가 연동된 샘플 소스를 확인할 수 있습니다.
 
-### 자바스크립트 SDK API
-
-[웹 SDK를 설치](#웹-SDK-설치)한 후, 페이지 로딩 또는 이벤트 발생 시점에 자바스크립트 API 함수를 호출합니다.
-
-`<sphereAnalytics.min.js>` Sphere 자바스크립트 SDK
-> [web/sphereAnalytics.min.js](web/sphereAnalytics.min.js) 파일 참조
-
-`<sphereAnalytics.js>` Sphere 자바스크립트 SDK API 명세서
-> [web/sphereAnalytics.js](web/sphereAnalytics.js) 파일 참조
-
-`<index.html>` 웹페이지 사용 예제
-> [web/index.html](web/index.html) 파일 참조
+* 웹페이지 사용 예제: [web/index.html](web/index.html) 파일 참조
+* Sphere 자바스크립트 SDK: [web/sphereAnalytics.min.js](web/sphereAnalytics.min.js) 파일 참조
+* Sphere 자바스크립트 SDK API 명세서: [web/sphereAnalytics.js](web/sphereAnalytics.js) 파일 참조
 
 ## 커스텀 이벤트 사용하기
 
@@ -115,8 +100,8 @@ SphereAnalytics.logEvent("purchase_clicked", null);
 
 사용자 속성 연동 시 고려해야 할 사항은 다음과 같으며 해당되는 모든 시점에 사용자 속성들을 설정해야 정확한 분석이 가능합니다.
 
-1. 자동 로그인 사용 : 로그인 상태 및 사용자 정보를 알 수 있는 가장 빠른 시점에 로그온 또는 로그오프 상태에 따라 사용자 아이디 및 정보를 설정 또는 초기화
-2. 자동 로그인 미사용 : 로그인 또는 로그아웃 시 해당 상태에 따라 해당 사용자 아이디 및 정보를 설정 또는 초기화
+1. (필수) 실행 후 현재 로그인 여부를 알 수 있는 가장 빠른 시점에 로그온 또는 로그오프 상태에 따라 사용자 아이디 및 사용자 정보를 설정 또는 초기화
+2. 로그인 또는 로그아웃 상태 변경 시 해당 상태에 따라 해당 사용자 아이디 및 사용자 정보를 설정 또는 초기화
 
 ### 사용자 아이디 설정
 
@@ -205,4 +190,30 @@ if (isLogIn) { // 로그인: ON 상태
 SphereAnalytics.setUserProperty("user_property_name", "user_property_value");
 // 커스텀 사용자 속성 초기화
 SphereAnalytics.setUserProperty("user_property_name", null);
+```
+
+## 추가 설정
+
+> 추가 설정은 필수적인 연동 사항은 아니며 필요한 경우 선택적으로 사용이 가능합니다.
+
+### 로그 출력
+
+로그 출력을 활성화 하면 SDK 초기화 성공 여부 및 이벤트, 사용자 속성 설정에 관한 로그를 확인할 수 있습니다. 출력되는 로그들은 [SDK 로그를 통한 검증](#sdk-로그를-통한-검증)에서 확인 가능합니다.
+
+```js
+SphereAnalytics.setLogLevel("info"); //default: error, 로그 레벨: ['none' | 'error' | 'info']
+```
+
+### 비로그인 사용자 이벤트 수집
+
+인터넷 웹브라우저 환경에서는 기본적으로 로그인 사용자의 이벤트들만 수집을 합니다. 만약 비로그인 사용자의 이벤트들 또한 수집하길 원하는 경우 초기화 시 `trackAnonymous` 정보를 true로 설정해야 합니다.
+
+```js
+let sphereAs_options  = new Object();
+sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자 수집 여부
+
+// SDK 초기화
+SphereAnalytics.init(
+        '[Your Sphere Web Key]', sphereAs_options
+);
 ```

@@ -1,83 +1,82 @@
 <!DOCTYPE html>
-<html lang="ko">
-<header>
-<title>Sphere Analytics SDK Test Page</title>
-<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.5">
-<link rel="icon" href="data:;base64,iVBORw0KGgo=">
-<style type="text/css">
-  .outset { border-style: outset; }
-</style>
-<!-- 설치 script -->
-<script src="sphereAnalytics.min.js"></script>
-<!-- 연동 테스트 설정   -->
-<script>
-  let sphereAs_options  = new Object();
-   //sphereAs_options.test = true;            //default : false 테스트연동 여부 
-   //sphereAs_options.logLevel = 'verbose';   //default : error 로그레벨 ['none' | 'error' | 'info' | 'verbose']
-   //sphereAs_options.trackAnonymous = false; //default : false 비로그인 사용자 추척여부
- 
-   // 연동 테스트 설정
-   SphereAnalytics.init(
-           '[Your Sphere Web Key]'
-           ,sphereAs_options
-   );
-</script>
 
-<script> // 테스트 function
-  function login(userId, gender, birthYear) {
-    SphereAnalytics
-      .setUserId(userId)
-      .setGender(gender)
-      .setBirthYear(birthYear)
-      ;
-  }
-  function logout() {
-    SphereAnalytics
-      .setUserId(null)
-      .resetPoints()
-      .setGrade(null)
-      .setGender(null)
-      .setBirthYear(0)
-      .setEmail(null)
-      .setPhoneNumber(null)
-      ;
-  }
-</script>
-</header>
+<html>
+<head>
+    <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.5">
+
+    <!-- Web SDK 설치 -->
+    <script src="sphereAnalytics.min.js"></script>
+    <script type="text/javascript">
+        // SDK 검증 로그 활성화
+        SphereAnalytics.setLogLevel("info");
+
+        // 웹 브라우저 사용자의 데이터 수집을 위한 Web SDK 초기화
+        // 앱을 통한 사용자의 이벤트만 수집할 경우에는 Web SDK 초기화 X
+//        SphereAnalytics.init('[web Key]');
+    </script>
+</head>
+
 <body>
-  <h3>SphereAnalytics Web SDK Test Page</h3>
-    <botton class="outset" onclick="login('userA','m',1985)">'UserA' 로그인</botton><br /><br />
-    <botton class="outset" onclick="logout()">로그아웃</botton>
-  <h4>User Property 테스트</h4>
-    <botton class="outset" onclick="SphereAnalytics.setUserId('UserB')">'UserB' 사용자ID 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setUserId(null)">삭제</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setTotalEarnedPoint(1000).setRemainingPoint(800).setTotalUsedPoint(200)">포인트 정보 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.resetPoints()">삭제</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setRemainingPoint(800)">보유 포인트 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setRemainingPoint(0)">리셋</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setTotalEarnedPoint(1000)">누적 획득 포인트 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setTotalEarnedPoint(0)">리셋</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setTotalUsedPoint(200)">누적 사용 포인트 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setTotalUsedPoint(0)">리셋</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setGrade('gold')">사용자 등급 Gold 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setGrade(null)">삭제</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setGender('f')">성별 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setGender(null)">삭제</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setBirthYear(2000)">출생년도 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setBirthYear(0)">삭제</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setEmail('abc@domain.com')">Email 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setEmail(null)">삭제</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.setPhoneNumber('8201022223333')">폰번호 설정</botton>
-    <botton class="outset" onclick="SphereAnalytics.setPhoneNumber(null)">삭제</botton>
-  <h4>이벤트 전송 테스트</h4>
-    <botton class="outset" onclick="SphereAnalytics.logEvent('test')">테스트 이벤트(파라미터 없음)</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.logEvent('test',{pname:1})">테스트 이벤트(파라미터 있음)</botton>
-  <h4>예외 테스트</h4>
-    <botton class="outset" onclick="SphereAnalytics.setUserProperty('_abc', 'hahaha')">잘못된 사용자 속성 명 설정</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.logEvent('#abc', {'pname':1})">잘못된 이벤트 명 설정</botton><br /><br />
-    <botton class="outset" onclick="SphereAnalytics.logEvent('teat', {'_pname':1})">잘못된 이벤트 파라미터 명 설정</botton>
-  <script>
-    SphereAnalytics.logEvent("page", {url: document.location.href});
-  </script>
+    <h4>Sphere Analytics Web SDK Sample</h4>
+
+    <button onclick="event_click()">Log Event</button>
+    <br/><br/>
+    <button onclick="user_property_click()">Set User Property</button>
+
+    <script type="text/javascript">
+
+        // 파라미터가 없는 이벤트 기록
+        SphereAnalytics.logEvent("purchaseView", null);
+
+        function event_click() {
+            // 이벤트 및 파라미터 기록. 파라미터 형식: JSON 타입 { name : value, ... }
+            var params = { item: "notebook", price: 9.9, quantity: 1 };
+            SphereAnalytics.logEvent("purchase", params);
+        }
+
+        function user_property_click() {
+
+            var isLogIn = true;
+
+            if (isLogIn) { // 로그인: ON 상태
+
+                // 사용자 아이디 설정
+                SphereAnalytics.setUserId("[USER ID]");
+
+                // 보유 포인트 설정
+                SphereAnalytics.setRemainingPoint(1000);
+                // 등급 설정
+                SphereAnalytics.setGrade("vip");
+                // 성별 설정 - 남성("m"), 여성("f")
+                SphereAnalytics.setGender("m"); // 남성("m")
+//                SphereAnalytics.setGender("f"); // 여성("f")
+                // 출생년도 설정
+                SphereAnalytics.setBirthYear(1995); // 출생년도
+                // 이메일 설정
+                SphereAnalytics.setEmail("xxxx@xxxx.com");
+                // 전화번호 설정
+                SphereAnalytics.setPhoneNumber("821011112222");
+
+            } else { // 로그아웃: OFF 상태
+
+                // 사용자 아이디 초기화
+                SphereAnalytics.setUserId(null);
+
+                // 보유 포인트 초기화
+                SphereAnalytics.resetPoints();
+                // 등급 초기화
+                SphereAnalytics.setGrade(null);
+                // 성별 초기화
+                SphereAnalytics.setGender(null);
+                // 출생년도 초기화
+                SphereAnalytics.setBirthYear(0);
+                // 이메일 초기화
+                SphereAnalytics.setEmail(null);
+                // 전화번호 초기화
+                SphereAnalytics.setPhoneNumber(null);
+            }
+        }
+    </script>
+
 </body>
 </html>

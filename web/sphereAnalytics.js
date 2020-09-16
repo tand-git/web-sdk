@@ -6,8 +6,6 @@ export interface SphereAnalytics
 {
   /** 초기화
    * settings 에 설정 가능한 속성 목록
-   * - token: {string} 웹 Key
-   * - test: {boolean} 테스트 연동 (기본값: false)
    * - logLevel: {'none'|'error'|'info'|'verbose'} 로그 레벨 설정 (기본값: 'error')
    * - trackAnonymous: {boolean} 비로그인 사용자 이벤트 수집도 허용 (기본값: false)
    * @param {Object} settings 
