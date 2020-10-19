@@ -32,14 +32,14 @@
 [SDK 샘플 소스](web)에서 최신 버전의 Sphere SDK가 연동된 샘플 소스를 확인할 수 있습니다.
 
 * 웹페이지 사용 예제: [web/index.html](web/index.html) 파일 참조
-* 자바스크립트 SDK: [web/sphereAnalytics.min.js](web/sphereAnalytics.min.js) 파일 참조
+* 자바스크립트 SDK: [web/sphereAnalytics.hcs.js](web/sphereAnalytics.hcs.js) 파일 참조
 
 ### 자바스크립트 SDK 다운로드 및 설치
 
-[SDK 다운로드 페이지](https://github.com/tand-git/web-sdk/releases)에서 최신 버전의 자바스크립트 SDK 파일(`sphereAnalytics.min.js`)을 웹서버에 다운로드한 후 웹페이지의 `<head>` 태그 내 또는 Sphere 자바스크립트 API 호출 이전 시점에 자바스크립트 SDK 파일을 추가합니다.
+최신 버전의 자바스크립트 SDK 파일(`sphereAnalytics.hcs.js`)을 웹서버에 다운로드한 후 웹페이지의 `<head>` 태그 내 또는 Sphere 자바스크립트 API 호출 이전 시점에 자바스크립트 SDK 파일을 추가합니다.
 
 ```html
-<script src="sphereAnalytics.min.js"></>
+<script src="sphereAnalytics.hcs.js"></>
 ```
 
 ### 자바스크립트 SDK 초기화
