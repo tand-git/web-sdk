@@ -2,9 +2,9 @@
 
 * [기본 연동](#기본-연동)
   * [네이티브 SDK 연동](#네이티브-SDK-연동)
+  * [샘플 소스](#샘플-소스)
   * [자바스크립트 SDK 다운로드 및 설치](#자바스크립트-SDK-다운로드-및-설치)
   * [자바스크립트 SDK 초기화](#자바스크립트-SDK-초기화)
-  * [샘플 소스](#샘플-소스)
 * [커스텀 이벤트 사용하기](#커스텀-이벤트-사용하기)
 * [사용자 속성 사용하기](#사용자-속성-사용하기)
   * [사용자 아이디 설정](#사용자-아이디-설정)
@@ -27,9 +27,16 @@
 * [iOS SDK 연동가이드](https://github.com/tand-git/ios-sdk) : [기본 연동](https://github.com/tand-git/ios-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/ios-sdk#웹뷰-설정)
 * [SDK 연동 검증 가이드](https://github.com/tand-git/sphere-sdk/blob/master/guide/SDK_Inspection.md) : 기본 연동이 완료되었다면 SDK 연동 검증 가이드에 따라 SDK 동작 상태를 확인할 수 있습니다.
 
+### 샘플 소스
+
+[SDK 샘플 소스](web)에서 최신 버전의 Sphere SDK가 연동된 샘플 소스를 확인할 수 있습니다.
+
+* 웹페이지 사용 예제: [web/index.html](web/index.html) 파일 참조
+* 자바스크립트 SDK: [web/sphereAnalytics.min.js](web/sphereAnalytics.min.js) 파일 참조
+
 ### 자바스크립트 SDK 다운로드 및 설치
 
-[SDK 다운로드 페이지](https://github.com/tand-git/web-sdk/releases)에서 최신 버전의 자바스크립트 SDK 파일(`sphereAnalytics.min.js`)을 웹서버에 다운로드한 후 웹페이지의 `<head>` 태그 내 또는 Sphere 자바스크립트 API 호출 이전 시점에 자바스크립트 SDK 파일(sphereAnalytics.min.js)을 추가합니다.
+[SDK 다운로드 페이지](https://github.com/tand-git/web-sdk/releases)에서 최신 버전의 자바스크립트 SDK 파일(`sphereAnalytics.min.js`)을 웹서버에 다운로드한 후 웹페이지의 `<head>` 태그 내 또는 Sphere 자바스크립트 API 호출 이전 시점에 자바스크립트 SDK 파일을 추가합니다.
 
 ```html
 <script src="sphereAnalytics.min.js"></>
@@ -37,14 +44,8 @@
 
 ### 자바스크립트 SDK 초기화
 
-> 모바일 앱만 지원하는 경우에는 자바스크립트 SDK 초기화는 필요하지 않습니다.
-> 웹브라우저를 통해 접속한 사용자의 데이터를 수집하는 경우 자바스크립트 SDK 초기화가 필요합니다.
-
-|구분|자바스크립트 SDK 초기화|네이티브 SDK 연동|
-|----|:---:|:---:|
-|모바일 앱에서만 수집|X|필수|
-|인터넷 웹브라우저에서만 수집|필수|X|
-|모바일 앱, 인터넷 웹브라우저 모두 수집|필수|필수|
+> 모바일 앱만 지원하는 경우 자바스크립트 SDK 초기화는 필요하지 않습니다.
+> 모바일 앱 및 웹브라우저를 모두 지원시 자바스크립트 SDK 초기화가 필요합니다.
 
 [Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 웹키와 함께 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
 초기화가 완료되지 않았거나 정상적인 웹키를 사용하지 않은 경우 웹브라우저 환경에서 데이터가 수집되지 않습니다.
@@ -52,14 +53,6 @@
 ```js
 SphereAnalytics.init("Your Sphere Analytics Web Key");
 ```
-
-### 샘플 소스
-
-[SDK 샘플 소스](web)에서 최신 버전의 Sphere SDK가 연동된 샘플 소스를 확인할 수 있습니다.
-
-* 웹페이지 사용 예제: [web/index.html](web/index.html) 파일 참조
-* Sphere 자바스크립트 SDK: [web/sphereAnalytics.min.js](web/sphereAnalytics.min.js) 파일 참조
-* Sphere 자바스크립트 SDK API 명세서: [web/sphereAnalytics.js](web/sphereAnalytics.js) 파일 참조
 
 ## 커스텀 이벤트 사용하기
 
@@ -89,8 +82,6 @@ var params = { item: "notebook", price: 9.9, quantity: 1 };
 SphereAnalytics.logEvent("purchase", params);
 
 // 파라미터가 없는 이벤트 기록
-SphereAnalytics.logEvent("purchase_clicked");
- 또는
 SphereAnalytics.logEvent("purchase_clicked", null);
 ```
 
