@@ -24,13 +24,14 @@
 
     <script type="text/javascript">
 
-        // 파라미터가 없는 이벤트 기록
-        SphereAnalytics.logEvent("purchaseView", null);
-
         function event_click() {
-            // 이벤트 및 파라미터 기록. 파라미터 형식: JSON 타입 { name : value, ... }
-            var params = { item: "notebook", price: 9.9, quantity: 1 };
-            SphereAnalytics.logEvent("purchase", params);
+            // 파라미터를 포함한 이벤트 기록
+            // 파라미터 형식: JSON 타입 { name:value, ... }
+            var params = { param_name_1: "param_value", param_name_2: 9.9, param_name_3: 1 };
+            SphereAnalytics.logEvent("event_name_1", params);
+
+            // 파라미터가 없는 이벤트 기록
+            SphereAnalytics.logEvent("event_name_2", null);
         }
 
         function user_property_click() {

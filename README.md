@@ -77,12 +77,13 @@ SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 커스텀 이벤
     * 지원 타입 : String(최대 100자), Number
 
 ```js
-// 이벤트 및 파라미터 기록. 파라미터 형식: JSON 타입 { name : value, ... }
-var params = { item: "notebook", price: 9.9, quantity: 1 };
-SphereAnalytics.logEvent("purchase", params);
+// 파라미터를 포함한 이벤트 기록
+// 파라미터 형식: JSON 타입 { name:value, ... }
+var params = { param_name_1: "param_value", param_name_2: 9.9, param_name_3: 1 };
+SphereAnalytics.logEvent("event_name_1", params);
 
 // 파라미터가 없는 이벤트 기록
-SphereAnalytics.logEvent("purchase_clicked", null);
+SphereAnalytics.logEvent("event_name_2", null);
 ```
 
 ## 사용자 속성 사용하기
