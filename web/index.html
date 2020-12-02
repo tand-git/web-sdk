@@ -21,6 +21,11 @@
     <button onclick="event_click()">Log Event</button>
     <br/><br/>
     <button onclick="user_property_click()">Set User Property</button>
+    <br/><br/>
+
+    [푸시 동의 설정]
+    <button onclick="user_push_agree(true)">동의</button>
+    <button onclick="user_push_agree(false)">거부</button>
 
     <script type="text/javascript">
 
@@ -55,7 +60,7 @@
                 // 이메일 설정
                 SphereAnalytics.setEmail("xxxx@xxxx.com");
                 // 전화번호 설정
-                SphereAnalytics.setPhoneNumber("821011112222");
+                SphereAnalytics.setPhoneNumber("821011112222"); 
 
             } else { // 로그아웃: OFF 상태
 
@@ -75,6 +80,15 @@
                 // 전화번호 초기화
                 SphereAnalytics.setPhoneNumber(null);
             }
+        }
+
+        function user_push_agree(agree) {
+            // 정보성 푸시 발송 동의 설정 (허용:true, 거부:false)
+            SpherePushMessage.agreePushMessageForInformation(agree);
+            // 광고성 푸시 발송 동의 설정 (허용:true, 거부:false)
+            SpherePushMessage.agreePushMessageForAdvertisement(agree);
+            // 야간 푸시 발송 동의 설정 (허용:true, 거부:false)
+            SpherePushMessage.agreePushMessageAtNight(agree);
         }
     </script>
 
