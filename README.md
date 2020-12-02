@@ -11,6 +11,9 @@
   * [사용자 정보 설정](#사용자-정보-설정)
   * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
 * [추가 설정](#추가-설정)
+    * [로그 출력](#로그-출력)
+    * [비로그인 사용자 이벤트 수집](#비로그인-사용자-이벤트-수집)
+* [사용자 푸시 동의 설정 (네이티브 SDK 연동 시)](#사용자-푸시-동의-설정-(네이티브-SDK-연동-시))
 
 ## 기본 연동
 
@@ -208,4 +211,18 @@ sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자
 SphereAnalytics.init(
         '[Your Sphere Web Key]', sphereAs_options
 );
+```
+
+## 사용자 푸시 동의 설정 (네이티브 SDK 연동 시)
+> 사용자의 푸시 동의 설정에 따라 푸시 메시지 발송 허용 여부를 판단하기 위해서는 해당 정보를 SDK에 설정해야 합니다.
+
+정보성, 광고성 푸시 발송 동의 설정은 필수 항목이며, 야간 푸시 발송은 미설정 시 동의 거부 상태로서 야간에 푸시 메시지가 발송되지 않습니다.
+
+```js
+// 정보성 푸시 발송 동의 설정 (허용:true, 거부:false)
+SpherePushMessage.agreePushMessageForInformation(true);
+// 광고성 푸시 발송 동의 설정 (허용:true, 거부:false)
+SpherePushMessage.agreePushMessageForAdvertisement(true);
+// 야간 푸시 발송 동의 설정 (허용:true, 거부:false)
+SpherePushMessage.agreePushMessageAtNight(true);
 ```
