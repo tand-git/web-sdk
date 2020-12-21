@@ -19,13 +19,13 @@
 
 > SDK 기본 연동은 이벤트 수집을 위한 필수 연동 사항이며 보다 정확한 이벤트 분석 및 트래킹을 위해서는 기본 연동에 포함된 가이드 중 해당되는 모든 항목들의 연동이 필요합니다.
 
-* 웹뷰 기반의 모바일 앱을 통한 사용자는 네이티브 SDK에서 설정한 앱키(App Key)를 통해 이벤트를 수집
-* 인터넷 웹브라우저를 통해 접속한 사용자는 자바스크립트 SDK에서 설정한 웹키(Web Key)를 통해 이벤트를 수집
+* 웹뷰 기반의 모바일 앱을 통한 사용자는 네이티브(Android, iOS) SDK에서 설정한 앱키(App key)를 통해 이벤트를 수집
+* 인터넷 웹브라우저를 통해 접속한 사용자는 자바스크립트 SDK에서 설정한 앱키(App Key)를 통해 이벤트를 수집
 
 ### Sphere Analytics 시작하기
 
-Sphere Analytics 사용을 위해서는 기본적으로 웹키(Web key)가 필요합니다.  
-웹키가 없는 경우 Sphere Analytics 콘솔([https://analytics.tand.kr](https://analytics.tand.kr), Chrome 브라우저 활용)을 방문하여 회원 가입 및 로그인 후 앱등록 단계에서 웹키를 발급받습니다.
+Sphere Analytics 사용을 위해서는 기본적으로 앱키(App key)가 필요합니다.  
+앱키가 없는 경우 Sphere Analytics 콘솔([https://analytics.tand.kr](https://analytics.tand.kr), Chrome 브라우저 활용)을 방문하여 회원 가입 및 로그인 후 앱등록 단계에서 앱키를 발급받습니다.
 
 ### 샘플 소스
 
@@ -44,14 +44,11 @@ Sphere Analytics 사용을 위해서는 기본적으로 웹키(Web key)가 필�
 
 ### 자바스크립트 SDK 초기화
 
-> 모바일 앱만 지원하는 경우 자바스크립트 SDK 초기화는 필요하지 않습니다.
-> 모바일 앱 및 웹브라우저를 모두 지원시 자바스크립트 SDK 초기화가 필요합니다.
-
-[Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 웹키와 함께 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
-초기화가 완료되지 않았거나 정상적인 웹키를 사용하지 않은 경우 웹브라우저 환경에서 데이터가 수집되지 않습니다.
+SDK 설치가 완료되었다면 [Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 앱키로 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
+초기화가 완료되지 않았거나 정상적인 앱키를 사용하지 않은 경우 데이터가 수집되지 않습니다.
 
 ```js
-SphereAnalytics.init("Your Sphere Analytics Web Key");
+SphereAnalytics.init("Your Sphere Analytics App Key");
 ```
 
 ## 이벤트 연동하기
@@ -198,7 +195,7 @@ sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자
 
 // SDK 초기화
 SphereAnalytics.init(
-        '[Your Sphere Web Key]', sphereAs_options
+        '[Your Sphere App Key]', sphereAs_options
 );
 ```
 
