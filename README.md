@@ -1,12 +1,12 @@
 # Sphere Web SDK
 
 * [기본 연동](#기본-연동)
-  * [네이티브 SDK 연동](#네이티브-SDK-연동)
+  * [Sphere Analytics 시작하기](#sphere-analytics-시작하기)
   * [샘플 소스](#샘플-소스)
   * [자바스크립트 SDK 다운로드 및 설치](#자바스크립트-SDK-다운로드-및-설치)
   * [자바스크립트 SDK 초기화](#자바스크립트-SDK-초기화)
-* [커스텀 이벤트 사용하기](#커스텀-이벤트-사용하기)
-* [사용자 속성 사용하기](#사용자-속성-사용하기)
+* [이벤트 연동하기](#이벤트-연동하기)
+* [사용자 속성 연동하기](#사용자-속성-연동하기)
   * [사용자 아이디 설정](#사용자-아이디-설정)
   * [사용자 정보 설정](#사용자-정보-설정)
   * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
@@ -20,16 +20,13 @@
 
 > SDK 기본 연동은 이벤트 수집을 위한 필수 연동 사항이며 보다 정확한 이벤트 분석 및 트래킹을 위해서는 기본 연동에 포함된 가이드 중 해당되는 모든 항목들의 연동이 필요합니다.
 
-* 웹뷰 기반의 모바일 앱을 통한 사용자는 네이티브 SDK에서 설정한 앱키(App Key)를 통해 이벤트를 수집
-* 인터넷 웹브라우저를 통해 접속한 사용자는 자바스크립트 SDK에서 설정한 웹키(Web Key)를 통해 이벤트를 수집
+* 웹뷰 기반의 모바일 앱을 통한 사용자는 네이티브(Android, iOS) SDK에서 설정한 앱키(App key)를 통해 이벤트를 수집
+* 인터넷 웹브라우저를 통해 접속한 사용자는 자바스크립트 SDK에서 설정한 앱키(App Key)를 통해 이벤트를 수집
 
-### 네이티브 SDK 연동
+### Sphere Analytics 시작하기
 
-> 웹뷰 기반의 모바일 앱인 경우 필수 연동 사항이며 Android, iOS SDK 연동가이드의 기본 연동 및 웹뷰 설정이 완료되어야 네이티브 SDK를 통해 이벤트 수집이 가능합니다.
-
-* [Android SDK 연동가이드](https://github.com/tand-git/android-sdk) : [기본 연동](https://github.com/tand-git/android-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/android-sdk#웹뷰-설정)
-* [iOS SDK 연동가이드](https://github.com/tand-git/ios-sdk) : [기본 연동](https://github.com/tand-git/ios-sdk#기본-연동), [웹뷰 설정](https://github.com/tand-git/ios-sdk#웹뷰-설정)
-* [SDK 연동 검증 가이드](https://github.com/tand-git/sphere-sdk/blob/master/guide/SDK_Inspection.md) : 기본 연동이 완료되었다면 SDK 연동 검증 가이드에 따라 SDK 동작 상태를 확인할 수 있습니다.
+Sphere Analytics 사용을 위해서는 기본적으로 앱키(App key)가 필요합니다.  
+앱키가 없는 경우 Sphere Analytics 콘솔([https://analytics.tand.kr](https://analytics.tand.kr), Chrome 브라우저 활용)을 방문하여 회원 가입 및 로그인 후 앱등록 단계에서 앱키를 발급받습니다.
 
 ### 샘플 소스
 
@@ -48,21 +45,18 @@
 
 ### 자바스크립트 SDK 초기화
 
-> 모바일 앱만 지원하는 경우 자바스크립트 SDK 초기화는 필요하지 않습니다.
-> 모바일 앱 및 웹브라우저를 모두 지원시 자바스크립트 SDK 초기화가 필요합니다.
-
-[Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 웹키와 함께 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
-초기화가 완료되지 않았거나 정상적인 웹키를 사용하지 않은 경우 웹브라우저 환경에서 데이터가 수집되지 않습니다.
+SDK 설치가 완료되었다면 [Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 앱키로 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
+초기화가 완료되지 않았거나 정상적인 앱키를 사용하지 않은 경우 데이터가 수집되지 않습니다.
 
 ```js
-SphereAnalytics.init("Your Sphere Analytics Web Key");
+SphereAnalytics.init("Your Sphere Analytics App Key");
 ```
 
-## 커스텀 이벤트 사용하기
+## 이벤트 연동하기
 
 > 이벤트는 가장 기본이 되는 수집 정보이며 이벤트는 이벤트명과 파라미터들로 구성이 됩니다.
 
-SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 커스텀 이벤트를 설정할 수 있으며, 한 이벤트는 최대 25개의 파라미터를 설정할 수 있습니다.
+SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 이벤트를 연동할 수 있으며, 한 이벤트는 최대 25개의 파라미터를 설정할 수 있습니다.
 파라미터는 파라미터명과 파라미터값의 쌍으로 구성되며 JSON 타입을 통해 설정이 가능합니다.
 
 이벤트명은 필수이며 파라미터는 없는 경우 `null`로 설정 가능합니다. 이벤트명과 파라미터에 관한 규칙은 다음과 같습니다.
@@ -90,7 +84,7 @@ SphereAnalytics.logEvent("event_name_1", params);
 SphereAnalytics.logEvent("event_name_2", null);
 ```
 
-## 사용자 속성 사용하기
+## 사용자 속성 연동하기
 
 > 사용자 속성을 사용할 경우 수집된 이벤트들을 세분화하여 더욱 자세한 분석 정보를 얻을 수 있으며 개인 정보들은 암호화되어 서버에 저장됩니다. 사용자 속성들은 한번 설정되면 이후 재설정 또는 초기화될 때까지 설정된 값으로 유지됩니다.
 
@@ -101,8 +95,9 @@ SphereAnalytics.logEvent("event_name_2", null);
 
 ### 사용자 아이디 설정
 
+사용자 아이디는 고객이 고객사의 서비스에 로그인할 때 사용되는 아이디가 아니라, 고객사의 시스템에서 사용자를 관리하는 고유한 식별값을 의미합니다.
 고유한 사용자를 구분하기 위한 사용자 아이디로서 설정 여부에 따라 로그인 여부를 판단합니다.  
-해당 정보는 유저를 구분하기 위한 용도로만 사용되므로 사용자를 구분하는 어떠한 식별 아이디도 사용 가능합니다.  
+해당 정보는 유저를 구분하기 위한 용도로만 사용되므로 사용자를 식별하는 고유한 (Unique) 어떠한 식별 아이디도 사용 가능합니다.  
 사용자 아이디는 최대 256자까지 설정가능하고 `null`로 설정 시 사용자 아이디 정보는 초기화되고 로그아웃 상태로 설정됩니다.  
 
 ```js
@@ -117,10 +112,10 @@ if (isLogIn) { // 로그인: ON 상태
 
 ### 사용자 정보 설정
 
-추가적인 사용자 정보(보유 포인트, 등급, 성별, 출생년도, 전화번호, 이메일)를 설정합니다.  
+추가적인 사용자 정보(보유 포인트, 등급, 성별, 출생년도)를 설정합니다.  
 로그아웃 상태 시 다음과 같이 설정된 사용자 정보들을 초기화해야 합니다.
 
-1. 문자형(등급, 성별, 전화번호, 이메일) 초기화 : `null`로 설정
+1. 문자형(등급, 성별) 초기화 : `null`로 설정
 2. 숫자형(보유 포인트) 초기화 : `resetPoints` 함수 호출
 3. 숫자형(출생년도) 초기화 : `0`으로 설정
 
@@ -138,10 +133,6 @@ if (isLogIn) { // 로그인: ON 상태
     SphereAnalytics.setGender("m"); // 남성일 경우: "m", 여성일 경우: "f"
     // 출생년도 설정
     SphereAnalytics.setBirthYear(1995); // 출생년도
-    // 이메일 설정
-    SphereAnalytics.setEmail("xxxx@xxxx.com");
-    // 전화번호 설정
-    SphereAnalytics.setPhoneNumber("821011112222");
 
 } else { // 로그아웃: OFF 상태
 
@@ -156,11 +147,6 @@ if (isLogIn) { // 로그인: ON 상태
     SphereAnalytics.setGender(null);
     // 출생년도 초기화
     SphereAnalytics.setBirthYear(0);
-    // 이메일 초기화
-    SphereAnalytics.setEmail(null);
-    // 전화번호 초기화
-    SphereAnalytics.setPhoneNumber(null);
-
 }
 ```
 
@@ -225,6 +211,6 @@ sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자
 
 // SDK 초기화
 SphereAnalytics.init(
-        '[Your Sphere Web Key]', sphereAs_options
+        '[Your Sphere App Key]', sphereAs_options
 );
 ```
