@@ -152,10 +152,9 @@ if (isLogIn) { // 로그인: ON 상태
 
 ### 커스텀 사용자 속성 설정
 
-미리 정의되지 않은 사용자 속성 정보를 사용 시 `setUserProperty` 함수를 이용하여 커스텀 사용자 속성을 설정할 수 있습니다.  
-사용자 속성은 속성명과 속성값의 쌍으로 구성되며 속성값을 `null`로 설정 시 해당 속성은 초기화 됩니다.
-
-사용자 속성에 관한 규칙은 다음과 같습니다.
+미리 정의되지 않은 사용자 속성 정보를 사용 시 `setUserProperty`(문자형) 또는 `setUserPropertyLong`(정수형) 함수를 이용하여 커스텀 사용자 속성을 설정할 수 있습니다.  
+사용자 속성은 속성명과 속성값의 쌍으로 구성되며 사용자 속성 정보 초기화 시 `removeUserProperty` 함수를 이용하여 초기화가 가능합니다.
+또한 문자형 사용자 속성의 경우 속성값을 `null`로 설정 시 해당 속성은 초기화 됩니다.
 
 1. 사용자 속성명
     * 최대 40자
@@ -169,9 +168,11 @@ if (isLogIn) { // 로그인: ON 상태
 
 ```js
 // 커스텀 사용자 속성 설정
-SphereAnalytics.setUserProperty("user_property_name", "user_property_value");
+SphereAnalytics.setUserProperty("user_property_name_1", "user_property_value");
+SphereAnalytics.setUserPropertyLong("user_property_name_2", 12345);
 // 커스텀 사용자 속성 초기화
-SphereAnalytics.setUserProperty("user_property_name", null);
+SphereAnalytics.removeUserProperty("user_property_name_1");
+SphereAnalytics.removeUserProperty("user_property_name_2");
 ```
 
 ## 사용자 푸시 동의 설정
