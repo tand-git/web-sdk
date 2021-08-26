@@ -10,6 +10,7 @@
   * [사용자 아이디 설정](#사용자-아이디-설정)
   * [사용자 정보 설정](#사용자-정보-설정)
   * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
+  * [커스텀 사용자 포인트 설정](#커스텀-사용자-포인트-설정)
 * [사용자 푸시 동의 설정 (네이티브 SDK 연동 시)](#사용자-푸시-동의-설정)
 * [추가 설정](#추가-설정)
     * [로그 출력](#로그-출력)
@@ -92,6 +93,7 @@ SphereAnalytics.logEvent("event_name_2", null);
 
 1. (필수) 실행 후 현재 로그인 여부를 알 수 있는 가장 빠른 시점에 로그온 또는 로그오프 상태에 따라 사용자 아이디 및 사용자 정보를 설정 또는 초기화
 2. 로그인 또는 로그아웃 상태 변경 시 해당 상태에 따라 해당 사용자 아이디 및 사용자 정보를 설정 또는 초기화
+3. 사용자 정보 변경 시 변경된 속성 설정 또는 사용자 전체 정보 설정
 
 ### 사용자 아이디 설정
 
@@ -120,33 +122,31 @@ if (isLogIn) { // 로그인: ON 상태
 3. 숫자형(출생년도) 초기화 : `0`으로 설정
 
 ```js
-if (isLogIn) { // 로그인: ON 상태
+if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
 
     // 사용자 아이디 설정
     SphereAnalytics.setUserId("[USER ID]");
-
-    // 보유 포인트 설정
-    SphereAnalytics.setRemainingPoint(1000);
     // 등급 설정
     SphereAnalytics.setGrade("vip");
     // 성별 설정
     SphereAnalytics.setGender("m"); // 남성일 경우: "m", 여성일 경우: "f"
     // 출생년도 설정
     SphereAnalytics.setBirthYear(1995); // 출생년도
+    // 보유 포인트 설정
+    SphereAnalytics.setRemainingPoint(1000);
 
 } else { // 로그아웃: OFF 상태
 
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
-
-    // 보유 포인트 초기화
-    SphereAnalytics.removePoints();
     // 등급 초기화
     SphereAnalytics.setGrade(null);
     // 성별 초기화
     SphereAnalytics.setGender(null);
     // 출생년도 초기화
     SphereAnalytics.setBirthYear(0);
+    // 보유 포인트 초기화
+    SphereAnalytics.removePoints();
 }
 ```
 
@@ -174,6 +174,32 @@ SphereAnalytics.setUserPropertyLong("user_property_name_2", 12345);
 SphereAnalytics.removeUserProperty("user_property_name_1");
 SphereAnalytics.removeUserProperty("user_property_name_2");
 ```
+
+### 커스텀 사용자 포인트 설정
+
+미리 정의되지 않은 사용자 속성 정보를 사용 시 `setRemainingPoint`(보유 포인트) 함수를 이용하여 커스텀 사용자 포인트를 설정할 수 있습니다.  
+사용자 속성은 속성명과 속성값의 쌍으로 구성되며 사용자 속성 정보 초기화 시 `removePoints` 함수를 이용하여 초기화가 가능합니다.
+또한 사용자의 전체 포인트를 초기화하는 경우 `resetPoints`함수를 이용하여 초기화 가능합니다.
+
+1. 사용자 속성값
+    * 최대 100자
+    * 지원 타입 : String
+
+2. 사용자 속성명
+    * 최대 40자
+    * 영문 대소문자, 숫자, 특수문자 중 ‘_’ 만 허용
+    * 첫 글자는 영문 대소문자만 허용
+    * setRemainingPoint(포인트) 함수사용 시 "point"로 사전 정의된 포인트명임으로 사용 불가
+
+```js
+// 커스텀 사용자 속성 설정
+SphereAnalytics.setRemainingPoint( 1234567, "user_point_name");
+// 커스텀 사용자 속성 초기화
+SphereAnalytics.removePoints("user_point_name");
+// 사용자 포인트 전체 초기화(기본포인트 + 커스텀포인트)
+SphereAnalytics.resetPoints();
+```
+
 
 ## 사용자 푸시 동의 설정
 
