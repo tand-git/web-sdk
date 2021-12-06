@@ -15,6 +15,7 @@
 * [추가 설정](#추가-설정)
     * [로그 출력](#로그-출력)
     * [비로그인 사용자 이벤트 수집](#비로그인-사용자-이벤트-수집)
+    * [인앱메세지 설정](#인앱메세지-설정)
 
 
 ## 기본 연동
@@ -238,6 +239,20 @@ SphereAnalytics.setLogLevel("info"); //default: error, 로그 레벨: ['none' | 
 ```js
 let sphereAs_options  = new Object();
 sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자 수집 여부
+
+// SDK 초기화
+SphereAnalytics.init(
+        '[Your Sphere App Key]', sphereAs_options
+);
+```
+
+### 인앱메세지 설정
+
+인앱메세지를 사용을 하는 경우 아래와 같이 설정합니다.
+
+```js
+let sphereAs_options  = new Object();
+sphereAs_options.webMsg = true; //default: false, 웹메세지 사용 여부
 
 // SDK 초기화
 SphereAnalytics.init(
