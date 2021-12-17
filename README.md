@@ -47,8 +47,8 @@ Sphere Analytics 사용을 위해서는 기본적으로 앱키(App key)가 필�
 
 ### 자바스크립트 SDK 초기화
 
-SDK 설치가 완료되었다면 [Sphere Analytics 콘솔](https://analytics.tand.kr)에서 발급받은 앱키로 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
-초기화가 완료되지 않았거나 정상적인 앱키를 사용하지 않은 경우 데이터가 수집되지 않습니다.
+SDK 설치가 완료되었다면 [Sphere Analytics 콘솔](https://analytics.tand.kr)에서  발급받은 앱키로 페이지 상단에 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
+초기화가 완료되지 않았거나 정상적인 앱키를 사용하지 않은 경우 데이터가 수집되지 않습니다. 
 
 ```js
 SphereAnalytics.init("Your Sphere Analytics App Key");
@@ -57,6 +57,8 @@ SphereAnalytics.init("Your Sphere Analytics App Key");
 ## 이벤트 연동하기
 
 > 이벤트는 가장 기본이 되는 수집 정보이며 이벤트는 이벤트명과 파라미터들로 구성이 됩니다.
+
+> 이벤트 연동 검증 방법 : [링크](https://worried-raccoon-858.notion.site/9c378285aef24cf4b3d482193c04a4b9)
 
 SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 이벤트를 연동할 수 있으며, 한 이벤트는 최대 25개의 파라미터를 설정할 수 있습니다.
 파라미터는 파라미터명과 파라미터값의 쌍으로 구성되며 JSON 타입을 통해 설정이 가능합니다.
@@ -157,6 +159,9 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
 사용자 속성은 속성명과 속성값의 쌍으로 구성되며 사용자 속성 정보 초기화 시 `removeUserProperty` 함수를 이용하여 초기화가 가능합니다.
 또한 문자형 사용자 속성의 경우 속성값을 `null`로 설정 시 해당 속성은 초기화 됩니다.
 
+(단, 개인정보는 전달하면 안됩니다. ex: 생년월일, 전화번호, e-mail등)
+
+사용자 속성에 관한 규칙은 다음과 같습니다.
 1. 사용자 속성명
     * 최대 40자
     * 영문 대소문자, 숫자, 특수문자 중 ‘_’ 만 허용
@@ -215,10 +220,48 @@ SphereAnalytics.resetPoints();
 // 정보성 푸시 발송 동의 설정 (허용:true, 거부:false)
 SpherePushMessage.agreePushMessageForInformation(true);
 // 광고성 푸시 발송 동의 설정 (허용:true, 거부:false)
-SpherePushMessage.agreePushMessageForAdvertisement(true);
+SpherePushMessage.agreePushMessageForAdvertisement(false);
 // 야간 푸시 발송 동의 설정 (허용:true, 거부:false)
-SpherePushMessage.agreePushMessageAtNight(true);
+SpherePushMessage.agreePushMessageAtNight(false);
+
+
+ex)
+
+SpherePushMessage.agreePushMessageForInformation(false);
+SpherePushMessage.agreePushMessageForAdvertisement(false);
+// 야간 동의 설정이 있는 경우에만
+//SpherePushMessage.agreePushMessageAtNight(false);
+if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
+
+    // 사용자 아이디 설정
+    SphereAnalytics.setUserId("[USER ID]");
+    ...
+    // 사용자 동의설정
+    SpherePushMessage.agreePushMessageForInformation(true);
+    SpherePushMessage.agreePushMessageForAdvertisement(["동의설정값"]);
+    // 야간 동의 설정이 있는 경우에만
+    //SpherePushMessage.agreePushMessageAtNight(["동의설정값"]);
+} else { // 로그아웃: OFF 상태
+    // 사용자 아이디 초기화
+    SphereAnalytics.setUserId(null);
+    ...
+    SpherePushMessage.agreePushMessageForInformation(true);
+    SpherePushMessage.agreePushMessageForAdvertisement(["동의설정값"]);
+    // 야간 동의 설정이 있는 경우에만
+    //SpherePushMessage.agreePushMessageAtNight(["동의설정값"]);
+    
+    }
+
+
 ```
+
+## 사용자 휴면/ 탈퇴 정보 전달
+
+> 휴면/ 탈퇴로 변경된 사용자를 필터링하여 푸시 메세지를 발송하기 위해 API로 휴면/ 탈퇴 정보 전달이 필요합니다.
+
+> 해당 문의는 담당자/dev@tand.kr로 연락바랍니다.
+
+
 
 ## 추가 설정
 
@@ -240,7 +283,7 @@ SphereAnalytics.setLogLevel("info"); //default: error, 로그 레벨: ['none' | 
 let sphereAs_options  = new Object();
 sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자 수집 여부
 
-// SDK 초기화
+// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다. 
 SphereAnalytics.init(
         '[Your Sphere App Key]', sphereAs_options
 );
@@ -254,7 +297,7 @@ SphereAnalytics.init(
 let sphereAs_options  = new Object();
 sphereAs_options.webMsg = true; //default: false, 웹메세지 사용 여부
 
-// SDK 초기화
+// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다. 
 SphereAnalytics.init(
         '[Your Sphere App Key]', sphereAs_options
 );
