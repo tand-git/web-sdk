@@ -30,12 +30,13 @@
 Sphere Analytics 사용을 위해서는 기본적으로 앱키(App key)가 필요합니다.  
 앱키가 없는 경우 Sphere Analytics 콘솔([https://analytics.tand.kr](https://analytics.tand.kr), Chrome 브라우저 활용)을 방문하여 회원 가입 및 로그인 후 앱등록 단계에서 앱키를 발급받습니다.
 
-### 샘플 소스
+### 샘플 소스 및 연동 검증 가이드
 
 [SDK 샘플 소스](web)에서 최신 버전의 Sphere SDK가 연동된 샘플 소스를 확인할 수 있습니다.
 
 * 웹페이지 사용 예제: [web/index.html](web/index.html) 파일 참조
 * 자바스크립트 SDK: [web/sphereAnalytics.min.js](web/sphereAnalytics.min.js) 파일 참조
+- [SDK 연동 검증 가이드](https://lightning-individual-9c1.notion.site/ed4a7dd092d6446e8be56e73648637a2) : 기본 연동이 완료되었다면 SDK 연동 검증 가이드에 따라 SDK 동작 상태를 확인할 수 있습니다.
 
 ### 자바스크립트 SDK 다운로드 및 설치
 
@@ -94,22 +95,23 @@ SphereAnalytics.logEvent("event_name_2", null);
 
 사용자 속성 연동 시 고려해야 할 사항은 다음과 같으며 해당되는 모든 시점에 사용자 속성들을 설정해야 정확한 분석이 가능합니다.
 
-1. (필수) 실행 후 현재 로그인 여부를 알 수 있는 가장 빠른 시점에 로그온 또는 로그오프 상태에 따라 사용자 아이디 및 사용자 정보를 설정 또는 초기화
-2. 로그인 또는 로그아웃 상태 변경 시 해당 상태에 따라 해당 사용자 아이디 및 사용자 정보를 설정 또는 초기화
-3. 사용자 정보 변경 시 변경된 속성 설정 또는 사용자 전체 정보 설정
+1. (필수) 웹페이지마다 사용자 아이디 및 사용자 정보를 설정해야함.
+2. 로그인 상태에 따라 사용자 아이디 및 사용자 정보를 설정 또는 초기화
 
 ### 사용자 아이디 설정
 
 사용자 아이디는 고객이 고객사의 서비스에 로그인할 때 사용되는 아이디가 아니라, 고객사의 시스템에서 사용자를 관리하는 고유한 식별값을 의미합니다.
 고유한 사용자를 구분하기 위한 사용자 아이디로서 설정 여부에 따라 로그인 여부를 판단합니다.  
 해당 정보는 유저를 구분하기 위한 용도로만 사용되므로 사용자를 식별하는 고유한 (Unique) 어떠한 식별 아이디도 사용 가능합니다.  
-사용자 아이디는 최대 256자까지 설정가능하고 `null`로 설정 시 사용자 아이디 정보는 초기화되고 로그아웃 상태로 설정됩니다.  
+사용자 아이디는 최대 256자까지 설정가능하고 `null`로 설정 시 사용자 아이디 정보는 초기화되고 로그아웃 상태로 설정됩니다.
 
 ```js
-if (isLogIn) { // 로그인: ON 상태
-    // 사용자 아이디 설정 - 로그인: ON 상태
+if (isLogIn) { 
+    // 로그인: ON 상태
+    // 사용자 아이디 설정 
     SphereAnalytics.setUserId("[USER ID]");
-} else { // 로그아웃: OFF 상태
+} else { 
+    // 로그아웃: OFF 상태
     // 사용자 아이디 초기화 - 로그아웃: OFF 상태
     SphereAnalytics.setUserId(null);
 }
@@ -125,7 +127,9 @@ if (isLogIn) { // 로그인: ON 상태
 3. 숫자형(출생년도) 초기화 : `0`으로 설정
 
 ```js
-if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
+if (isLogIn) { 
+    // 로그인: ON 상태 
+    // 사용자 정보 변경 시 설정
 
     // 사용자 아이디 설정
     SphereAnalytics.setUserId("[USER ID]");
@@ -138,7 +142,8 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
     // 보유 포인트 설정
     SphereAnalytics.setRemainingPoint(1000);
 
-} else { // 로그아웃: OFF 상태
+} else { 
+    // 로그아웃: OFF 상태
 
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
@@ -209,7 +214,7 @@ SphereAnalytics.resetPoints();
 
 ## 사용자 푸시 동의 설정
 
-> 사용자의 푸시 동의 설정에 따라 푸시 메시지 발송 허용 여부를 판단하기 위해서는 해당 정보를 SDK에 설정해야 합니다.  
+> 사용자의 푸시 동의 설정에 따라 푸시 메시지 발송 허용 여부를 판단하기 위해서는 해당 정보를 SDK에 설정해야 합니다.
 
 > 로그인, 로그아웃 등 푸시동의정보 변경이 발생되는 위치에 SDK 설정이 필요합니다.
 
@@ -249,7 +254,7 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
     SpherePushMessage.agreePushMessageForAdvertisement(["동의설정값"]);
     // 야간 동의 설정이 있는 경우에만
     //SpherePushMessage.agreePushMessageAtNight(["동의설정값"]);
-    
+
     }
 
 
@@ -269,10 +274,10 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
 
 ### 로그 출력
 
-로그 출력을 활성화 하면 SDK 초기화 성공 여부 및 이벤트, 사용자 속성 설정에 관한 로그를 확인할 수 있습니다. 출력되는 로그들은 [SDK 로그를 통한 검증](#sdk-로그를-통한-검증)에서 확인 가능합니다.
+로그 출력을 활성화 하면 SDK 초기화 성공 여부 및 이벤트, 사용자 속성 설정에 관한 로그를 확인할 수 있습니다. 서버로 전송된 데이터 확인은 [검증가이드](https://lightning-individual-9c1.notion.site/ed4a7dd092d6446e8be56e73648637a2)를 참조바랍니다.
 
 ```js
-SphereAnalytics.setLogLevel("info"); //default: error, 로그 레벨: ['none' | 'error' | 'info']
+SphereAnalytics.setLogLevel('info'); //default: error, 로그 레벨: ['none' | 'error' | 'info']
 ```
 
 ### 비로그인 사용자 이벤트 수집
@@ -283,7 +288,7 @@ SphereAnalytics.setLogLevel("info"); //default: error, 로그 레벨: ['none' | 
 let sphereAs_options  = new Object();
 sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자 수집 여부
 
-// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다. 
+// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
 SphereAnalytics.init(
         '[Your Sphere App Key]', sphereAs_options
 );
@@ -297,7 +302,7 @@ SphereAnalytics.init(
 let sphereAs_options  = new Object();
 sphereAs_options.webMsg = true; //default: false, 웹메세지 사용 여부
 
-// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다. 
+// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
 SphereAnalytics.init(
         '[Your Sphere App Key]', sphereAs_options
 );
