@@ -2,7 +2,7 @@
 
 * [기본 연동](#기본-연동)
   * [Sphere Analytics 시작하기](#sphere-analytics-시작하기)
-  * [샘플 소스](#샘플-소스)
+  * [샘플 소스 및 연동 검증 가이드](#샘플-소스-및-연동-검증-가이드)
   * [자바스크립트 SDK 다운로드 및 설치](#자바스크립트-SDK-다운로드-및-설치)
   * [자바스크립트 SDK 초기화](#자바스크립트-SDK-초기화)
 * [이벤트 연동하기](#이벤트-연동하기)
@@ -59,7 +59,7 @@ SphereAnalytics.init("Your Sphere Analytics App Key");
 
 > 이벤트는 가장 기본이 되는 수집 정보이며 이벤트는 이벤트명과 파라미터들로 구성이 됩니다.
 
-> 이벤트 연동 검증 방법 : [링크](https://worried-raccoon-858.notion.site/9c378285aef24cf4b3d482193c04a4b9)
+> 이벤트 연동 검증 방법 : [링크](https://lightning-individual-9c1.notion.site/ed4a7dd092d6446e8be56e73648637a2)
 
 SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 이벤트를 연동할 수 있으며, 한 이벤트는 최대 25개의 파라미터를 설정할 수 있습니다.
 파라미터는 파라미터명과 파라미터값의 쌍으로 구성되며 JSON 타입을 통해 설정이 가능합니다.
@@ -145,16 +145,9 @@ if (isLogIn) {
 } else { 
     // 로그아웃: OFF 상태
 
-    // 사용자 아이디 초기화
+    // 다음과 같이 사용자 아이디 초기화 입력 시 사용자 정보도 초기화됩니다.
     SphereAnalytics.setUserId(null);
-    // 등급 초기화
-    SphereAnalytics.setGrade(null);
-    // 성별 초기화
-    SphereAnalytics.setGender(null);
-    // 출생년도 초기화
-    SphereAnalytics.setBirthYear(0);
-    // 보유 포인트 초기화
-    SphereAnalytics.removePoints();
+   
 }
 ```
 
@@ -249,7 +242,7 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
 } else { // 로그아웃: OFF 상태
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
-    ...
+    
     SpherePushMessage.agreePushMessageForInformation(true);
     SpherePushMessage.agreePushMessageForAdvertisement(["동의설정값"]);
     // 야간 동의 설정이 있는 경우에만
