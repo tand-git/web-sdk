@@ -77,12 +77,18 @@ SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 이벤트를 연
     * 첫 글자는 영문 대소문자만 허용
 
 3. 파라미터값
-    * 지원 타입 : String(최대 100자), Number
+    * 지원 타입 : String(최대 100자), Number ,Array배열(String)
+    * webview를 사용중인 경우 iOS SDK v1.2.10 이상부터 지원
 
 ```js
 // 파라미터를 포함한 이벤트 기록
 // 파라미터 형식: JSON 타입 { name:value, ... }
-var params = { param_name_1: "param_value", param_name_2: 9.9, param_name_3: 1 };
+var params = { param_name_1: "param_value"
+            , param_name_2: 9.9
+            , param_name_3: 1 
+            , param_name_4: ['value1','value2']
+            };
+
 SphereAnalytics.logEvent("event_name_1", params);
 
 // 파라미터가 없는 이벤트 기록
