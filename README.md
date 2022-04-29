@@ -77,8 +77,9 @@ SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 이벤트를 연
     * 첫 글자는 영문 대소문자만 허용
 
 3. 파라미터값
-    * 지원 타입 : String(최대 100자), Number ,Array배열(String)
-    * webview를 사용중인 경우 iOS SDK v1.2.10 이상부터 지원
+    * 지원 타입 : String(최대 100자), Number 
+    * 추가지원타입 : String[]배열 (webview 사용중인 경우
+     iOS SDK v1.2.10 이상부터 지원)
 
 ```js
 // 파라미터를 포함한 이벤트 기록
