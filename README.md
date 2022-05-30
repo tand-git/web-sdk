@@ -286,7 +286,7 @@ sphereAs_options.trackAnonymous = true; //default: false, 비로그인 사용자
 
 // 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
 SphereAnalytics.init(
-        '[Your Sphere App Key]', sphereAs_options
+        'Your Sphere App Key', sphereAs_options
 );
 ```
 
@@ -300,6 +300,6 @@ sphereAs_options.webMsg = true; //default: false, 웹메세지 사용 여부
 
 // 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
 SphereAnalytics.init(
-        '[Your Sphere App Key]', sphereAs_options
+        'Your Sphere App Key', sphereAs_options
 );
 ```
