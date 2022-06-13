@@ -171,7 +171,7 @@ if (isLogIn) {
 
 2. 사용자 속성값
     * 최대 100자
-    * 지원 타입 : String , Number ,String[]배열 (SDK 1.1.6 부터 지원)
+    * 지원 타입 : String , Number , String[]배열 (SDK 1.1.6 부터 지원)
 
 
 ```js
