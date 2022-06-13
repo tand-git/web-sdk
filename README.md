@@ -171,7 +171,8 @@ if (isLogIn) {
 
 2. 사용자 속성값
     * 최대 100자
-    * 지원 타입 : String
+    * 지원 타입 : String , Number ,list<String> (SDK 1.1.11 부터 지원)
+
 
 ```js
 // 커스텀 사용자 속성 설정
@@ -180,6 +181,12 @@ SphereAnalytics.setUserPropertyLong("user_property_name_2", 12345);
 // 커스텀 사용자 속성 초기화
 SphereAnalytics.removeUserProperty("user_property_name_1");
 SphereAnalytics.removeUserProperty("user_property_name_2");
+
+// 배열 속성 설정
+SphereAnalytics.setUserPropertyArray("user_property_arr",['prop1','prop2'])
+// 배열 속성 초기화
+SphereAnalytics.setUserPropertyArray("user_property_arr",null)
+
 ```
 
 ### 커스텀 사용자 포인트 설정
