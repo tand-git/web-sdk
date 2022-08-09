@@ -222,9 +222,9 @@ SphereAnalytics.resetPoints();
 
 > 사용자의 푸시 동의 설정에 따라 푸시 메시지 발송 허용 여부를 판단하기 위해서는 해당 정보를 SDK에 설정해야 합니다.
 
-> [KISA]의 앱 푸쉬 안내가이드 확인바랍니다. [링크](https://spam.kisa.or.kr/spam/na/ntt/selectNttInfo.do?mi=1020&nttSn=1141&bbsId=1002)
-
 > 로그인, 로그아웃 등 푸시동의정보 변경이 발생되는 위치에 SDK 설정이 필요합니다.
+
+> [KISA]의 앱 푸쉬 안내가이드 확인바랍니다. [링크](https://spam.kisa.or.kr/spam/na/ntt/selectNttInfo.do?mi=1020&nttSn=1141&bbsId=1002)
 
 정보성, 광고성 푸시 발송 동의 설정은 필수 항목이며, 야간 푸시 발송은 미설정 시 동의 거부 상태로서 야간에 푸시 메시지가 발송되지 않습니다.
 
