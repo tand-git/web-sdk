@@ -8,7 +8,7 @@
 * [이벤트 연동하기](#이벤트-연동하기)
 * [사용자 속성 연동하기](#사용자-속성-연동하기)
   * [사용자 아이디 설정](#사용자-아이디-설정)
-  * [사용자 정보 설정](#사용자-정보-설정)
+  * [사용자 속성 설정](#사용자-속성-설정)
   * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
   * [커스텀 사용자 포인트 설정](#커스텀-사용자-포인트-설정)
 * [사용자 푸시 동의 설정 (네이티브 SDK 연동 시)](#사용자-푸시-동의-설정)
@@ -102,10 +102,9 @@ SphereAnalytics.logEvent("event_name_2", null);
 
 사용자 속성 연동 시 고려해야 할 사항은 다음과 같으며 해당되는 모든 시점에 사용자 속성들을 설정해야 정확한 분석이 가능합니다.
 
-1. (필수) 웹페이지마다 사용자 아이디 및 사용자 정보를 설정해야함.
-2. 로그인 상태에 따라 사용자 아이디 및 사용자 정보를 설정 또는 초기화
-
 ### 사용자 아이디 설정
+
+> (필수) 웹페이지마다 사용자 아이디를 설정해야함.
 
 사용자 아이디는 고객이 고객사의 서비스에 로그인할 때 사용되는 아이디가 아니라, 고객사의 시스템에서 사용자를 관리하는 고유한 식별값을 의미합니다.
 고유한 사용자를 구분하기 위한 사용자 아이디로서 설정 여부에 따라 로그인 여부를 판단합니다.  
@@ -124,15 +123,19 @@ if (isLogIn) {
 }
 ```
 
-### 사용자 정보 설정
+### 사용자 속성 설정
 
-추가적인 사용자 정보(보유 포인트, 등급, 성별, 출생년도)를 설정합니다.  
+
+추가적인 사용자 속성(보유 포인트, 등급, 성별, 출생년도)를 설정합니다.  
 로그아웃 상태인 경우 사용자아이디 설정을 null로 설정합니다.
+> 사용자 속성(성별, 출생년도, 기타 등) 분석을 위해 로그인 및 속성이 갱신되는 시점에 설정
+
+> 로그아웃 시점에 사용자 아이디(setUserId)를 null로 설정시 사용자 아이디 및 속성 정보 일괄 초기화
 
 ```js
 if (isLogIn) { 
     // 로그인: ON 상태 
-    // 사용자 정보 변경 시 설정
+    // 사용자 속성 변경 시 설정
 
     // 사용자 아이디 설정
     SphereAnalytics.setUserId("[USER ID]");
@@ -148,7 +151,7 @@ if (isLogIn) {
 } else { 
     // 로그아웃: OFF 상태
 
-    // 다음과 같이 사용자 아이디 초기화 입력 시 사용자 정보도 초기화됩니다.
+    // 다음과 같이 사용자 아이디 초기화 입력 시 사용자 속성도 초기화됩니다.
     SphereAnalytics.setUserId(null);
    
 }
@@ -219,8 +222,9 @@ SphereAnalytics.resetPoints();
 
 > 사용자의 푸시 동의 설정에 따라 푸시 메시지 발송 허용 여부를 판단하기 위해서는 해당 정보를 SDK에 설정해야 합니다.
 
-> 로그인, 로그아웃 등 푸시동의정보 변경이 발생되는 위치에 SDK 설정이 필요합니다.
+> [KISA]의 앱 푸쉬 안내가이드 확인바랍니다. 링크
 
+> 로그인, 로그아웃 등 푸시동의정보 변경이 발생되는 위치에 SDK 설정이 필요합니다.
 
 정보성, 광고성 푸시 발송 동의 설정은 필수 항목이며, 야간 푸시 발송은 미설정 시 동의 거부 상태로서 야간에 푸시 메시지가 발송되지 않습니다.
 
@@ -232,35 +236,34 @@ SpherePushMessage.agreePushMessageForAdvertisement(false);
 // 야간 푸시 발송 동의 설정 (허용:true, 거부:false)
 SpherePushMessage.agreePushMessageAtNight(false);
 
-
 ex)
-
 SpherePushMessage.agreePushMessageForInformation(false);
 SpherePushMessage.agreePushMessageForAdvertisement(false);
 // 야간 동의 설정이 있는 경우에만
 //SpherePushMessage.agreePushMessageAtNight(false);
-if (isLogIn) { // 로그인: ON 상태 및 사용자 정보 변경 시 설정
+if (isLogIn) { // 로그인: ON 상태 및 사용자 속성 변경 시 설정
 
     // 사용자 아이디 설정
     SphereAnalytics.setUserId("[USER ID]");
     ...
     // 사용자 동의설정
     SpherePushMessage.agreePushMessageForInformation(true);
-    SpherePushMessage.agreePushMessageForAdvertisement(["동의설정값"]);
+    SpherePushMessage.agreePushMessageForAdvertisement(["사용자 동의설정값"]);
     // 야간 동의 설정이 있는 경우에만
     //SpherePushMessage.agreePushMessageAtNight(["동의설정값"]);
 } else { // 로그아웃: OFF 상태
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
-    
-    SpherePushMessage.agreePushMessageForInformation(true);
-    SpherePushMessage.agreePushMessageForAdvertisement(["동의설정값"]);
-    // 야간 동의 설정이 있는 경우에만
-    //SpherePushMessage.agreePushMessageAtNight(["동의설정값"]);
+    SpherePushMessage.agreePushMessageForInformation(["사용자 동의설정값"]); //고객사에 정책에 따라 다름 정보성
+```
+> [주의] 로그아웃한 경우 광고수신 여부를 아래와 같이 작성되어야합니다. 
 
-    }
-
-
+> [KISA]의 앱푸시 광고 가이드- 기타사항 안내사항 확인 [링크](https://spam.kisa.or.kr/spam/na/ntt/selectNttInfo.do?mi=1020&nttSn=1141&bbsId=1002)
+```js
+    SpherePushMessage.agreePushMessageForAdvertisement(false); 
+    //야간수신동의 설정이 있는 경우
+    //SpherePushMessage.agreePushMessageAtNight(false);
+}
 ```
 
 ## 사용자 휴면/ 탈퇴 정보 전달
