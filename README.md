@@ -254,11 +254,12 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 속성 변경 시 설정
 } else { // 로그아웃: OFF 상태
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
-    SpherePushMessage.agreePushMessageForInformation(["사용자 동의설정값"]); //고객사에 정책에 따라 다름 정보성
+    // 정보성 푸시 고객사에 정책에 따라 설정
+    SpherePushMessage.agreePushMessageForInformation(["사용자 동의설정값"]); 
 ```
 > [주의] 로그아웃한 경우 광고수신 여부를 아래와 같이 작성되어야합니다. 
 
-> [KISA]의 앱푸시 광고 가이드- 기타사항 안내사항 확인 [링크](https://spam.kisa.or.kr/spam/na/ntt/selectNttInfo.do?mi=1020&nttSn=1141&bbsId=1002)
+> [KISA]의 앱푸시 광고 가이드 - 기타사항 안내사항 확인: [링크](https://spam.kisa.or.kr/spam/na/ntt/selectNttInfo.do?mi=1020&nttSn=1141&bbsId=1002)
 ```js
     SpherePushMessage.agreePushMessageForAdvertisement(false); 
     //야간수신동의 설정이 있는 경우
