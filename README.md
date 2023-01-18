@@ -250,16 +250,17 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 속성 변경 시 설정
     SpherePushMessage.agreePushMessageForInformation(true);
     // 광고성 푸시 : 고객사에 로그인 유저 관리에 따라 설정
     SpherePushMessage.agreePushMessageForAdvertisement(["사용자 동의설정값"]);
-    // 야간 동의 설정이 있는 경우에만
+    // 야간 푸시 수신 동의 설정이 있는 경우에만 참조.
     //SpherePushMessage.agreePushMessageAtNight(["동의설정값"]);
 } else { // 로그아웃: OFF 상태
     // 사용자 아이디 초기화
     SphereAnalytics.setUserId(null);
     // 정보성 푸시 : 고객사에 정책에 따라 설정
     SpherePushMessage.agreePushMessageForInformation(["사용자 동의설정값"]); 
+    // 비로그인 유저의 광고성 푸시/ 야간 푸시 설정에 관련된 내용은 하단의 KISA의 앱푸시 광고 가이드 참조바랍니다.
     // 광고성 푸시 설정 false
     SpherePushMessage.agreePushMessageForAdvertisement(false); 
-    // 야간 푸시 수신동의 설정 false
+    // 야간 푸시 수신 동의 설정이 있는 경우에만 참조. 야간 푸시 동의 설정 false
     //SpherePushMessage.agreePushMessageAtNight(false);
 }
 ```
