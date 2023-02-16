@@ -1,21 +1,22 @@
 # Sphere Web SDK
 
 * [기본 연동](#기본-연동)
-  * [Sphere Analytics 시작하기](#sphere-analytics-시작하기)
-  * [샘플 소스 및 연동 검증 가이드](#샘플-소스-및-연동-검증-가이드)
-  * [자바스크립트 SDK 다운로드 및 설치](#자바스크립트-SDK-다운로드-및-설치)
-  * [자바스크립트 SDK 초기화](#자바스크립트-SDK-초기화)
+    * [Sphere Analytics 시작하기](#sphere-analytics-시작하기)
+    * [샘플 소스 및 연동 검증 가이드](#샘플-소스-및-연동-검증-가이드)
+    * [자바스크립트 SDK 다운로드 및 설치](#자바스크립트-SDK-다운로드-및-설치)
+    * [자바스크립트 SDK 초기화](#자바스크립트-SDK-초기화)
 * [이벤트 연동하기](#이벤트-연동하기)
 * [사용자 속성 연동하기](#사용자-속성-연동하기)
-  * [사용자 아이디 설정](#사용자-아이디-설정)
-  * [사용자 속성 설정](#사용자-속성-설정)
-  * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
-  * [커스텀 사용자 포인트 설정](#커스텀-사용자-포인트-설정)
+    * [사용자 아이디 설정](#사용자-아이디-설정)
+    * [사용자 속성 설정](#사용자-속성-설정)
+    * [커스텀 사용자 속성 설정](#커스텀-사용자-속성-설정)
+    * [커스텀 사용자 포인트 설정](#커스텀-사용자-포인트-설정)
 * [사용자 푸시 동의 설정 (네이티브 SDK 연동 시)](#사용자-푸시-동의-설정)
 * [추가 설정](#추가-설정)
     * [로그 출력](#로그-출력)
     * [비로그인 사용자 이벤트 수집](#비로그인-사용자-이벤트-수집)
     * [인앱메세지 설정](#인앱메세지-설정)
+    * [멀티도메인 설정](#멀티도메인-설정)
 
 
 ## 기본 연동
@@ -49,7 +50,7 @@ Sphere Analytics 사용을 위해서는 기본적으로 앱키(App key)가 필�
 ### 자바스크립트 SDK 초기화
 
 SDK 설치가 완료되었다면 [Sphere Analytics 콘솔](https://analytics.tand.kr)에서  발급받은 앱키로 페이지 상단에 `init`을 호출하여 자바스크립트 SDK를 초기화합니다.  
-초기화가 완료되지 않았거나 정상적인 앱키를 사용하지 않은 경우 데이터가 수집되지 않습니다. 
+초기화가 완료되지 않았거나 정상적인 앱키를 사용하지 않은 경우 데이터가 수집되지 않습니다.
 
 ```js
 SphereAnalytics.init("Your Sphere Analytics App Key");
@@ -67,19 +68,19 @@ SDK가 초기화 되었다면 `logEvent` 함수를 이용하여 이벤트를 연
 이벤트명은 필수이며 파라미터는 없는 경우 `null`로 설정 가능합니다. 이벤트명과 파라미터에 관한 규칙은 다음과 같습니다.
 
 1. 이벤트명
-    * 최대 40자  
-    * 영문 대소문자, 숫자, 특수문자 중 ‘_’ 만 허용  
+    * 최대 40자
+    * 영문 대소문자, 숫자, 특수문자 중 ‘_’ 만 허용
     * 첫 글자는 영문 대소문자만 허용
 
 2. 파라미터명
-    * 최대 40자  
-    * 영문 대소문자, 숫자, 특수 문자 중 ‘_’ 만 허용  
+    * 최대 40자
+    * 영문 대소문자, 숫자, 특수 문자 중 ‘_’ 만 허용
     * 첫 글자는 영문 대소문자만 허용
 
 3. 파라미터값
-    * 지원 타입 : String(최대 100자), Number 
+    * 지원 타입 : String(최대 100자), Number
     * 추가지원타입 : String[]배열 (webview 사용중인 경우
-     iOS SDK v1.2.10 이상부터 지원)
+      iOS SDK v1.2.10 이상부터 지원)
 
 ```js
 // 파라미터를 포함한 이벤트 기록
@@ -115,7 +116,7 @@ SphereAnalytics.logEvent("event_name_2", null);
 if (isLogIn) { 
     // 로그인: ON 상태
     // 사용자 아이디 설정 
-    SphereAnalytics.setUserId("[USER ID]");
+    // SphereAnalytics.setUserId("[USER ID]");
 } else { 
     // 로그아웃: OFF 상태
     // 사용자 아이디 초기화 - 로그아웃: OFF 상태
@@ -159,7 +160,7 @@ if (isLogIn) {
 
 ### 커스텀 사용자 속성 설정
 
-미리 정의되지 않은 사용자 속성 정보를 사용 시 `setUserProperty`(문자형) 또는 `setUserPropertyLong`(정수형) 함수를 이용하여 커스텀 사용자 속성을 설정할 수 있습니다.  
+>미리 정의되지 않은 사용자 속성 정보를 사용 시 `setUserProperty`(문자형) 또는 `setUserPropertyLong`(정수형) 함수를 이용하여 커스텀 사용자 속성을 설정할 수 있습니다.  
 사용자 속성은 속성명과 속성값의 쌍으로 구성되며 사용자 속성 정보 초기화 시 `removeUserProperty` 함수를 이용하여 초기화가 가능합니다.
 또한 문자형 사용자 속성의 경우 속성값을 `null`로 설정 시 해당 속성은 초기화 됩니다.
 
@@ -236,7 +237,7 @@ SpherePushMessage.agreePushMessageForAdvertisement(false);
 // 야간 푸시 발송 동의 설정 (허용:true, 거부:false)
 SpherePushMessage.agreePushMessageAtNight(false);
 
-ex)
+//ex)
 SpherePushMessage.agreePushMessageForInformation(false);
 SpherePushMessage.agreePushMessageForAdvertisement(false);
 // 야간 동의 설정이 있는 경우에만
@@ -265,7 +266,7 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 속성 변경 시 설정
 }
 ```
 
-> [주의] 로그아웃한 경우 광고수신 여부를 아래와 같이 작성되어야합니다. 
+> [주의] 로그아웃한 경우 광고수신 여부를 아래와 같이 작성되어야합니다.
 
 > [KISA]의 앱푸시 광고 가이드 - 기타사항 안내사항 확인: [링크](https://spam.kisa.or.kr/spam/na/ntt/selectNttInfo.do?mi=1020&nttSn=1141&bbsId=1002)
 
@@ -284,7 +285,7 @@ if (isLogIn) { // 로그인: ON 상태 및 사용자 속성 변경 시 설정
 
 ### 로그 출력
 
-로그 출력을 활성화 하면 SDK 초기화 성공 여부 및 이벤트, 사용자 속성 설정에 관한 로그를 확인할 수 있습니다. 서버로 전송된 데이터 확인은 [검증가이드](https://lightning-individual-9c1.notion.site/ed4a7dd092d6446e8be56e73648637a2)를 참조바랍니다.
+>로그 출력을 활성화 하면 SDK 초기화 성공 여부 및 이벤트, 사용자 속성 설정에 관한 로그를 확인할 수 있습니다. 서버로 전송된 데이터 확인은 [검증가이드](https://lightning-individual-9c1.notion.site/ed4a7dd092d6446e8be56e73648637a2)를 참조바랍니다.
 
 ```js
 SphereAnalytics.setLogLevel('info'); //default: error, 로그 레벨: ['none' | 'error' | 'info']
@@ -292,7 +293,7 @@ SphereAnalytics.setLogLevel('info'); //default: error, 로그 레벨: ['none' | 
 
 ### 비로그인 사용자 이벤트 수집
 
-인터넷 웹브라우저 환경에서는 기본적으로 로그인 사용자의 이벤트들만 수집을 합니다. 만약 비로그인 사용자의 이벤트들 또한 수집하길 원하는 경우 초기화 시 `trackAnonymous` 정보를 true로 설정해야 합니다.
+>인터넷 웹브라우저 환경에서는 기본적으로 로그인 사용자의 이벤트들만 수집을 합니다. 만약 비로그인 사용자의 이벤트들 또한 수집하길 원하는 경우 초기화 시 `trackAnonymous` 정보를 true로 설정해야 합니다.
 
 ```js
 let sphereAs_options  = new Object();
@@ -306,14 +307,40 @@ SphereAnalytics.init(
 
 ### 인앱메세지 설정
 
-인앱메세지를 사용을 하는 경우 아래와 같이 설정합니다.
+>인앱메세지를 사용을 하는 경우 아래와 같이 설정합니다.
 
 ```js
 let sphereAs_options  = new Object();
-sphereAs_options.webMsg = true; // default: false, 웹메세지 사용 여부
+sphereAs_options.webMsg = true; //default: false, 웹메세지 사용 여부
 
 // 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
 SphereAnalytics.init(
         'Your Sphere App Key', sphereAs_options
+);
+```
+
+### 멀티도메인 설정
+> 멀티도메인은 SDK에서 자동으로 설정합니다.
+>
+> 설정된 멀티도메인의 확인 및 수정이 필요한 경우 아래의 가이드를 참조바랍니다.
+
+```js
+// 현재 SDK에 설정된 멀티도메인 주소값 확인방법
+// 1.브라우저-개발자도구-console창에 아래와 같이 입력합니다.
+SphereAnalytics.setLogLevel('info');
+SphereAnalytics.setNthDomain();
+// 2.콘솔창에 출력된 현재 설정된 멀티도메인값을 확인합니다.
+
+// 3.출력된 멀티도메인 값이 수정이 필요한 경우 아래의 스크립트를 WebSDK init시점에 적용합니다.
+let sphereAs_options  = new Object();
+// 입력하고자하는 n차 도메인에 해당하는 n을 입력.
+sphereAs_options.nthDomain = n //n은 숫자타입, 2부터 입력가능.
+// ex) code.tand.kr 인경우
+// n에 2입력시 'tand.kr'로 2차도메인으로 설정
+// n에 3입력시 'code.tand.kr'로 3차도메인으로 설정
+
+// 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
+SphereAnalytics.init(
+    'Your Sphere App Key', sphereAs_options
 );
 ```
