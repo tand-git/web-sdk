@@ -310,7 +310,7 @@ SphereAnalytics.init(
 
 ```js
 let sphereAs_options  = new Object();
-sphereAs_options.webMsg = true; //default: false, 웹메세지 사용 여부
+sphereAs_options.webMsg = true; // default: false, 웹메세지 사용 여부
 
 // 기존 SDK 초기화 부분을 아래와 같이 변경하여 초기화합니다.
 SphereAnalytics.init(
