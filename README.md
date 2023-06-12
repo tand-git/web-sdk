@@ -17,6 +17,8 @@
   * [로그 출력](#로그-출력)
   * [인앱메세지 설정](#인앱메세지-설정)
   * [멀티도메인 설정](#멀티도메인-설정)
+  * [페이지 뷰 수집](#페이지-뷰-수집)
+  * [페이지 스크롤 추적](#페이지-스크롤-추적)
  
   
 
@@ -320,3 +322,51 @@ SphereAnalytics.init(
     'Your Sphere App Key', sphereAs_options
 );
 ```
+
+### 페이지 뷰 수집
+> 페이지 뷰 수집 설정 방법은 아래와 같이 4가지로 제공됩니다.
+>- (공통) SphereAnalytics.init("앱키") 코드 이후 적용합니다.
+
+>
+>1. 자동 수집 방식 : 아래와 같은 데이터를 자동으로 수집 가능.
+>- 수집 데이터 : 페이지 타이틀, URL, 캠페인 정보(utm)
+>2. 페이지 타이틀명 변경 : 페이지 타이틀에 원하는 값으로 전송 가능하고, 나머지 데이터는 자동으로 수집 가능.
+>- 수집 데이터 : 페이지 타이틀(변경한 값), URL, 캠페인 정보(utm)
+>3. 커스텀 파라미터 수집 : 커스텀한 데이터를 전송 가능하고, 나머지 데이터는 자동으로 수집 가능.
+>- 수집 데이터 : 커스텀 데이터, 페이지 타이틀, URL, 캠페인 정보(utm)
+>4. 페이지 타이틀 변경 & 커스텀 파라미터 수집 : 페이지 타이틀에 원하는 값으로 전송 가능하고, 커스텀한 데이터를 전송 가능하고, 나머지 데이터는 자동으로 수집 가능.
+>- 수집 데이터 : 커스텀 데이터, 페이지 타이틀(변경한 값), URL, 캠페인 정보(utm)
+```js
+// 1. 자동 수집 방식 코드
+SphereAnalytics.pageView();
+```
+```js
+// 2.페이지 타이틀명 변경하여 수집하는 방식 코드
+SphereAnalytics.pageView('수집 페이지명')
+```
+```js
+// 3.커스텀 파라미터 수집하는 방식 코드(예시)
+let sphereAs_pageViewObj  = new Object();
+sphereAs_pageViewObj.category = '식품'
+SphereAnalytics.pageView( null, sphereAs_pageViewObj);
+```
+```js
+// 4.페이지 타이틀 변경 및 커스텀 파라미터 수집하는 방식 코드(예시)
+let sphereAs_pageViewObj  = new Object();
+sphereAs_pageViewObj.category = '식품'
+SphereAnalytics.pageView('수집 페이지명', sphereAs_pageViewObj);
+```
+
+### 페이지 스크롤 추적
+> 페이지 내에 고객의 최대 스크롤한 정보를 수집합니다.
+> 스크롤 추적이 필요한 페이지에 코드를 삽입합니다.
+> - (공통) SphereAnalytics.init("앱키") 코드 이후 적용합니다.
+
+```js
+// 함수 활용하여 스크롤 정보 수집하기 (적용된 페이지만 수집)
+SphereAnalytics.scroll(true);
+```
+
+
+
+
